@@ -3,7 +3,7 @@ package co.edu.uptc.model;
 import java.util.List;
 import java.util.UUID;
 
-import co.edu.uptc.model.enums.PerfilRiesgo;
+import co.edu.uptc.model.enums.RiskProfile;
 
 public class Inversionist {
 
@@ -11,10 +11,10 @@ public class Inversionist {
     private String name;
     private String email;
     private double availableCapital;
-    private PerfilRiesgo riskProfile;
+    private RiskProfile riskProfile;
     private List<Inversion> inversions;
 
-    public Inversionist(String id, String name, String email, double availableCapital, PerfilRiesgo riskProfile,
+    public Inversionist(String id, String name, String email, double availableCapital, RiskProfile riskProfile,
             List<Inversion> inversions) {
         this.id = id;
         this.name = name;
@@ -48,10 +48,10 @@ public class Inversionist {
     public void setAvailableCapital(double availableCapital) {
         this.availableCapital = availableCapital;
     }
-    public PerfilRiesgo getRiskProfile() {
+    public RiskProfile getRiskProfile() {
         return riskProfile;
     }
-    public void setRiskProfile(PerfilRiesgo riskProfile) {
+    public void setRiskProfile(RiskProfile riskProfile) {
         this.riskProfile = riskProfile;
     }
     public List<Inversion> getInversions() {

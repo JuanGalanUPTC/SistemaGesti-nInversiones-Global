@@ -8,10 +8,10 @@ import com.google.gson.reflect.TypeToken;
 import co.edu.uptc.model.Inversion;
 import co.edu.uptc.repository.JsonRepository;
 
-public class PortafolioService {
+public class PortfolioService {
     JsonRepository<Inversion> repo;
 
-    public PortafolioService() {
+    public PortfolioService() { //Cálculos globales
         Type type=new TypeToken<List<Inversion>>(){}.getType();
         repo=new JsonRepository<>("inversions.json", type);
     }

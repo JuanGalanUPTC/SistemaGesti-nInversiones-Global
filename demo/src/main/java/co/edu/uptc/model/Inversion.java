@@ -8,17 +8,17 @@ public class Inversion {
     private String inversionistId;
     private String assetId;
     private double amount;
-    private double purchaseAmount;
+    private double purchasePrice;
     private LocalDate date;
     private LocalTime time;
 
-    public Inversion(String id, String inversionistId, String assetId, double amount, double purchaseAmount,
+    public Inversion(String id, String inversionistId, String assetId, double amount, double purchasePrice,
             LocalDate date, LocalTime time) {
         this.id = id;
         this.inversionistId = inversionistId;
         this.assetId = assetId;
         this.amount = amount;
-        this.purchaseAmount = purchaseAmount;
+        this.purchasePrice = purchasePrice;
         this.date = date;
         this.time = time;
     }
@@ -47,11 +47,11 @@ public class Inversion {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    public double getPurchaseAmount() {
-        return purchaseAmount;
+    public double getPurchasePrice() {
+        return purchasePrice;
     }
-    public void setPurchaseAmount(double purchaseAmount) {
-        this.purchaseAmount = purchaseAmount;
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice= purchasePrice;
     }
     public LocalDate getDate() {
         return date;
@@ -69,6 +69,6 @@ public class Inversion {
     @Override
     public String toString() {
         return "Inversion [id=" + id + ", inversionistId=" + inversionistId + ", assetId=" + assetId + ", amount="
-                + amount + ", purchaseAmount=" + purchaseAmount + ", date=" + date + ", time=" + time + "]";
+                + amount + ", purchaseAmount=" + purchasePrice + ", date=" + date + ", time=" + time + "]";
     }
 }
