@@ -9,6 +9,10 @@ public class Asset { //Activo
     private double actualPrice;
     private double volatility;
 
+    /** Constructor vacío de la clase Asset. */
+    public Asset() {
+    }
+
     public Asset(String id, String name, AssetType assetType, double actualPrice, double volatility) {
         this.id = id;
         this.name = name;

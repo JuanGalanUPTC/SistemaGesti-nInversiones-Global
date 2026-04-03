@@ -12,6 +12,10 @@ public class Inversion {
     private LocalDate date;
     private LocalTime time;
 
+    /** Constructor vacío de la clase Inversion. */
+    public Inversion() {
+    }
+
     public Inversion(String id, String inversionistId, String assetId, double amount, double purchasePrice,
             LocalDate date, LocalTime time) {
         this.id = id;

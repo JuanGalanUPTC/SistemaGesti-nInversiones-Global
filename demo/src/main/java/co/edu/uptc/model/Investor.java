@@ -14,6 +14,10 @@ public class Investor {
     private RiskProfile riskProfile;
     private List<Inversion> inversions;
 
+    /** Constructor vacío de la clase Investor. */
+    public Investor() {
+    }
+
     public Investor(String id, String name, String email, double availableCapital, RiskProfile riskProfile,
             List<Inversion> inversions) {
         this.id = id;
