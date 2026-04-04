@@ -54,10 +54,11 @@ public class InvestmentService {
             double yieldPercentage, double purchasePrice, 
             LocalDate date, LocalTime time, double availableCapital, RiskProfile riskProfile, AssetType assetType){
         
-        double initialInvestment = calculateInitialInvestment(purchasePrice, amount);
+        purchasePrice = calculateInitialInvestment(assetService.findById(assetId).getActualPrice(), amount);
+        currentValue= purchasePrice;
 
         // validar capital
-        if (!validateAvailableCapital(availableCapital, initialInvestment)) {
+        if (!validateAvailableCapital(availableCapital, purchasePrice)) {
             throw new InsufficientCapitalException("Capital insuficiente para registrar la inversión.");
         }
 
@@ -95,8 +96,8 @@ public class InvestmentService {
      * @param amount cantidad de unidades
      * @return capital invertido inicialmente
      */
-    public double calculateInitialInvestment(double purchasePrice, double amount){
-        return purchasePrice*amount;
+    public double calculateInitialInvestment(double assetPrice, double amount){
+        return assetPrice*amount;
     }
 
     /**
@@ -158,7 +159,7 @@ public class InvestmentService {
             // Verificamos si la inversión contiene el activo modificado
             if (investment.getAssetId().equals(assetId)) {
                 // 4. Usamos tus métodos para calcular los nuevos valores
-                double newValue = calculateActualValue(investment);
+                double newValue = calculateCurrentValue(investment);
                 double newYield = calculateYieldPercentage(investment);
                 // 5. Actualizamos la inversión (Asumiendo que tienes estos setters en tu clase Inversion)
                 investment.setCurrentValue(newValue);
@@ -179,7 +180,7 @@ public class InvestmentService {
      *
      * @param investment inversion a la que se le actualizó el valor
      * @return valor actual de la inversión
-     */public double calculateActualValue(Investment investment) {
+     */public double calculateCurrentValue(Investment investment) {
         // 1. Usamos el ID guardado en la inversión para ir a buscar el Activo real
         Asset asset = assetService.findById(investment.getAssetId());
         
@@ -199,7 +200,7 @@ public class InvestmentService {
      */
     public double calculateYieldPercentage(Investment investment) {
         // 1. Calculamos el valor actual usando el método de arriba
-        double valorActual = calculateActualValue(investment);
+        double valorActual = calculateCurrentValue(investment);
         double inversionInicial = investment.getPurchasePrice(); // Lo que pagó al comprar
         
         // 2. Aplicamos la fórmula de tu documento: 

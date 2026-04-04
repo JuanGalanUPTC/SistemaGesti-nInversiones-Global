@@ -51,7 +51,7 @@ public class PortfolioService {
                     && (inv.getDate().isEqual(endDate) || inv.getDate().isBefore(endDate))) {
 
 
-                double actualValue = inversionService.calculateActualValue(inv);
+                double actualValue = inversionService.calculateCurrentValue(inv);
                 double purchaseValue = inversionService.calculateInitialInvestment(inv.getPurchasePrice(), inv.getAmount());
 
                 total += inversionService.calculateEarnings(actualValue, purchaseValue);
