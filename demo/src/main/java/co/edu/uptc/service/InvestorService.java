@@ -86,7 +86,7 @@ public class InvestorService {
                         RiskProfile parsedRisk = RiskProfile.valueOf(newRiskProfile.trim().toUpperCase());
                         investor.setRiskProfile(parsedRisk);
                     } catch (IllegalArgumentException e) {
-                        // Si no coincide con CONSERVADOR, MODERADO o AGRESIVO, lanzamos este error
+                        // Si no coincide con CONSERVATIVE, MODERATE o AGRESSIVE, lanzamos este error
                         throw new IllegalArgumentException("Error: El perfil de riesgo '" + newRiskProfile + "' no es válido.");
                     }
                 }

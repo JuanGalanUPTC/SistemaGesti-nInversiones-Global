@@ -31,7 +31,7 @@ public class InvestorController {
             String email = view.readStringInput("msg.input.investorEmail");
             double capital = view.readDoubleInput("msg.input.availableCapital");
 
-            String riskStr = view.readStringInput("msg.input.riskProfile"); // Ej: CONSERVADOR, MODERADO, AGRESIVO
+            String riskStr = view.readStringInput("msg.input.riskProfile"); // Ej: CONSERVATIVE, MODERATE, AGRESSIVE
             RiskProfile riskProfile = RiskProfile.valueOf(riskStr.toUpperCase());
 
             // Enviamos la lista vacía al momento de la creación tal como lo requiere tu servicio
