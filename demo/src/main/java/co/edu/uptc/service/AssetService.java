@@ -2,9 +2,7 @@ package co.edu.uptc.service;
 
 import java.lang.reflect.Type;
 import java.util.List;
-
 import com.google.gson.reflect.TypeToken;
-
 import co.edu.uptc.exception.AssetNotFoundException;
 import co.edu.uptc.model.Asset;
 import co.edu.uptc.model.enums.AssetType;
@@ -64,6 +62,23 @@ public class AssetService {
         return allAssets.stream()
                 .filter(asset -> asset.getAssetType() == t)
                 .toList();
+    }
+      /**
+     * Busca un activo por su identificador.
+     *
+     * @param id identificador del activo
+     * @return el {@link asset} encontrado, o {@code null} si no existe
+     */
+    public Asset findById(String id) {
+        try {
+            return repo.findAll()
+                    .stream()
+                    .filter(i -> i.getId().equals(id))
+                    .findFirst()
+                    .orElse(null);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Error trying to find the asset by id.", e);
+        }
     }
      //Consultar activos filtrando por  rango de precio 
     public List<Asset> findByPriceRange(double minPrice,double maxPrice){

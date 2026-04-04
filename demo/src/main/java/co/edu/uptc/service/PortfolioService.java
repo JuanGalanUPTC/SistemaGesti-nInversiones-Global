@@ -10,6 +10,7 @@ import co.edu.uptc.model.Inversion;
  * como el total de ganancias o pérdidas en un intervalo de fechas (reporte por periodo).
  */
 public class PortfolioService {
+    
     private InversionService inversionService;
     private AssetService assetService;
 
@@ -49,9 +50,8 @@ public class PortfolioService {
             if ((inv.getDate().isEqual(startDate) || inv.getDate().isAfter(startDate))
                     && (inv.getDate().isEqual(endDate) || inv.getDate().isBefore(endDate))) {
 
-                double actualPrice = assetService.getPrice(inv.getAssetId());
 
-                double actualValue = inversionService.calculateActualValue(actualPrice, inv.getAmount());
+                double actualValue = inversionService.calculateActualValue(inv);
                 double purchaseValue = inversionService.calculateInitialInvestment(inv.getPurchasePrice(), inv.getAmount());
 
                 total += inversionService.calculateEarnings(actualValue, purchaseValue);
