@@ -3,10 +3,13 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.google.gson.reflect.TypeToken;
 
 import co.edu.uptc.exception.IncompatibleRiskProfileException;
 import co.edu.uptc.exception.InsufficientCapitalException;
+import co.edu.uptc.model.Asset;
 import co.edu.uptc.model.Inversion;
 import co.edu.uptc.model.enums.AssetType;
 import co.edu.uptc.model.enums.RiskProfile;
@@ -18,7 +21,7 @@ import co.edu.uptc.repository.JsonRepository;
  */
 public class InversionService {
     private final JsonRepository<Inversion> repo;
-
+    private AssetService assetService;
     public InversionService() {
         Type type = new TypeToken<List<Inversion>>() {}.getType();
         this.repo = new JsonRepository<>("inversions.json", type);
@@ -47,7 +50,8 @@ public class InversionService {
      * @throws InsufficientCapitalException si el capital es insuficiente
      * @throws IncompatibleRiskProfileException si el perfil de riesgo no permite el activo
      */
-    public void createInversion(String id, String inversionistId, String assetId, double amount, double purchasePrice, 
+    public void createInversion(String id, String inversionistId, String assetId, double amount,double currentValue,
+            double yieldPercentage, double purchasePrice, 
             LocalDate date, LocalTime time, double availableCapital, RiskProfile riskProfile, AssetType assetType){
         
         double initialInvestment = calculateInitialInvestment(purchasePrice, amount);
@@ -60,7 +64,7 @@ public class InversionService {
         // validar riesgo
         validateRiskProfile(riskProfile, assetType);
 
-        Inversion inversion=new Inversion(id, inversionistId, assetId, amount, purchasePrice, date, time);
+        Inversion inversion=new Inversion(id, inversionistId, assetId, amount, currentValue, yieldPercentage, purchasePrice, date, time);
 
         try {
             repo.save(inversion);
@@ -82,17 +86,6 @@ public class InversionService {
         }
     }
 
-    /**
-     * Calcula el valor actual de la posición: cantidad multiplicada por el precio vigente del activo.
-     * Corresponde al requisito de valor actual = cantidad × precio actual.
-     *
-     * @param actualPrice precio de mercado actual del activo
-     * @param amount cantidad de unidades
-     * @return valor actual de la inversión
-     */
-    public double calculateActualValue(double actualPrice, double amount){
-        return actualPrice*amount;
-    }
 
     /**
      * Calcula la inversión inicial (desembolso en la compra): precio de compra por unidad multiplicado
@@ -118,23 +111,13 @@ public class InversionService {
         return actualValue-initialInvestment;
     }
 
-    //Consultar historial de inversiones de un inversionista (Falta)
-
-    /**
-     * Calcula el rendimiento porcentual respecto a la inversión inicial: {@code (ganancia / inversión inicial) × 100},
-     * donde la ganancia suele ser {@code valor actual − inversión inicial}.
-     *
-     * @param earning ganancia o pérdida monetaria (valor actual − inversión inicial)
-     * @param initialInvestment inversión inicial; no puede ser cero
-     * @return rendimiento en porcentaje
-     * @throws ArithmeticException si la inversión inicial es cero
-     */
-    public double calculatePerformance(double earning, double initialInvestment){
-        if (initialInvestment==0) {
-            throw new ArithmeticException("Purchase Cannot be Zero");
-        }
-        return (earning/initialInvestment)*100;
+    //Consultar historial de inversiones de un inversionista 
+    public List<Inversion> getInvestmentsByInvestorId(String investorId) {
+        return repo.findAll().stream()
+                .filter(inv -> inv.getInversionistId().equals(investorId))
+                .collect(Collectors.toList());
     }
+
 
     /**
      * Comprueba que el capital disponible sea mayor o igual al monto de la inversión inicial,
@@ -160,5 +143,71 @@ public class InversionService {
         if (assetType.getRiskLevel()>riskProfile.getMaxRisk()) {
             throw new IncompatibleRiskProfileException("Risk Profile "+riskProfile+" does not allows to investing in "+assetType);
         }
+    }
+    
+    public void updateAssetPriceProcces(String assetId, double newPrice) {
+        
+        // 1. Actualizamos el precio del activo (Esto actualiza activos.json)
+        assetService.updAssetPrice(assetId, newPrice);
+
+        // 2. Traemos TODAS las inversiones de la base de datos/JSON
+        List<Inversion> investments = repo.findAll();
+        boolean hasChanges = false;
+        // 3. Iteramos para buscar a quiénes les afecta este cambio
+        for (Inversion investment : investments) {
+            // Verificamos si la inversión contiene el activo modificado
+            if (investment.getAssetId().equals(assetId)) {
+                // 4. Usamos tus métodos para calcular los nuevos valores
+                double newValue = calculateActualValue(investment);
+                double newYield = calculateYieldPercentage(investment);
+                // 5. Actualizamos la inversión (Asumiendo que tienes estos setters en tu clase Inversion)
+                investment.setCurrentValue(newValue);
+                investment.setYieldPercentage(newYield);
+
+                hasChanges = true; // Marcamos que hubo al menos una modificación
+            }
+        }
+
+        // 6. Si hubo cambios, sobrescribimos el archivo de inversiones
+        if (hasChanges) {
+            repo.replaceAll(investments); // Esto actualiza inversiones.json
+        }
+    }
+    /**
+     * Calcula el valor actual de la posición: cantidad multiplicada por el precio vigente del activo.
+     * Corresponde al requisito de valor actual = cantidad × precio actual.
+     *
+     * @param investment inversion a la que se le actualizó el valor
+     * @return valor actual de la inversión
+     */public double calculateActualValue(Inversion investment) {
+        // 1. Usamos el ID guardado en la inversión para ir a buscar el Activo real
+        Asset asset = assetService.findById(investment.getAssetId());
+        
+        if (asset != null) {
+            // 2. Hacemos el cálculo: Valor actual = cantidad * precioActual
+            return investment.getAmount() * asset.getActualPrice();
+        }
+        return 0.0;
+    }
+
+    /**
+     * Calcula el rendimiento porcentual respecto a la inversión inicial: {@code (ganancia / inversión inicial) × 100},
+     * donde la ganancia suele ser {@code valor actual − inversión inicial}.
+     *
+     * @param investment inversion a la que se le va a calcular el rendimiento
+     * @return rendimiento en porcentaje
+     */
+    public double calculateYieldPercentage(Inversion investment) {
+        // 1. Calculamos el valor actual usando el método de arriba
+        double valorActual = calculateActualValue(investment);
+        double inversionInicial = investment.getPurchasePrice(); // Lo que pagó al comprar
+        
+        // 2. Aplicamos la fórmula de tu documento: 
+        // Rendimiento (%) = (valorActual - inversiónInicial) / inversiónInicial * 100
+        if (inversionInicial > 0) {
+            return ((valorActual - inversionInicial) / inversionInicial) * 100;
+        }
+        return 0.0;
+    
     }
 }
