@@ -3,7 +3,7 @@ package co.edu.uptc.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Inversion {
+public class Investment {
     private String id;
     private String inversionistId;
     private String assetId;
@@ -15,10 +15,10 @@ public class Inversion {
     private LocalTime time;
 
     /** Constructor vacío de la clase Inversion. */
-    public Inversion() {
+    public Investment() {
     }
 
-    public Inversion(String id, String inversionistId, String assetId, double amount, double currentValue,
+    public Investment(String id, String inversionistId, String assetId, double amount, double currentValue,
             double yieldPercentage, double purchasePrice, LocalDate date, LocalTime time) {
         this.id = id;
         this.inversionistId = inversionistId;

@@ -3,7 +3,7 @@ package co.edu.uptc.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import co.edu.uptc.model.Inversion;
+import co.edu.uptc.model.Investment;
 
 /**
  * Servicio de agregación de portafolio: cálculos sobre conjuntos de inversiones,
@@ -11,7 +11,7 @@ import co.edu.uptc.model.Inversion;
  */
 public class PortfolioService {
     
-    private InversionService inversionService;
+    private InvestmentService inversionService;
     private AssetService assetService;
 
     /**
@@ -21,7 +21,7 @@ public class PortfolioService {
      * @param inversionService servicio que aporta fórmulas de valor, inversión inicial y ganancia
      * @param assetService servicio que resuelve el precio actual por activo
      */
-    public PortfolioService(InversionService inversionService, AssetService assetService) {
+    public PortfolioService(InvestmentService inversionService, AssetService assetService) {
         this.inversionService = inversionService;
         this.assetService = assetService;
     }
@@ -38,7 +38,7 @@ public class PortfolioService {
      * @return suma de (valor actual − inversión inicial) de las inversiones en el periodo
      * @throws IllegalArgumentException si la fecha de inicio es posterior a la fecha final
      */
-    public double calculateEarningsByPeriod(List<Inversion> inversions, LocalDate startDate, LocalDate endDate) {
+    public double calculateEarningsByPeriod(List<Investment> inversions, LocalDate startDate, LocalDate endDate) {
         double total = 0;
 
         if (startDate.isAfter(endDate)) {
@@ -46,7 +46,7 @@ public class PortfolioService {
         }
 
 
-        for (Inversion inv : inversions) {
+        for (Investment inv : inversions) {
             if ((inv.getDate().isEqual(startDate) || inv.getDate().isAfter(startDate))
                     && (inv.getDate().isEqual(endDate) || inv.getDate().isBefore(endDate))) {
 

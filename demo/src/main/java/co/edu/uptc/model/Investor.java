@@ -12,14 +12,14 @@ public class Investor {
     private String email;
     private double availableCapital;
     private RiskProfile riskProfile;
-    private List<Inversion> inversions;
+    private List<Investment> inversions;
 
     /** Constructor vacío de la clase Investor. */
     public Investor() {
     }
 
     public Investor(String id, String name, String email, double availableCapital, RiskProfile riskProfile,
-            List<Inversion> inversions) {
+            List<Investment> inversions) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -58,10 +58,10 @@ public class Investor {
     public void setRiskProfile(RiskProfile riskProfile) {
         this.riskProfile = riskProfile;
     }
-    public List<Inversion> getInversions() {
+    public List<Investment> getInversions() {
         return inversions;
     }
-    public void setInversions(List<Inversion> inversions) {
+    public void setInversions(List<Investment> inversions) {
         this.inversions = inversions;
     }
 

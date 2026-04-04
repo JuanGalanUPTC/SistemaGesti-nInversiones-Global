@@ -17,23 +17,24 @@ import com.google.gson.reflect.TypeToken;
 
 import co.edu.uptc.exception.IncompatibleRiskProfileException;
 import co.edu.uptc.exception.InsufficientCapitalException;
-import co.edu.uptc.model.Inversion;
+import co.edu.uptc.model.Investment;
+import co.edu.uptc.service.InvestmentService;
 import co.edu.uptc.model.enums.AssetType;
 import co.edu.uptc.model.enums.RiskProfile;
 import co.edu.uptc.repository.JsonRepository;
 
-class InversionServiceTest {
+class InvestmentServiceTest {
 
     @TempDir
     private Path tempDir;
 
-    private InversionService service;
+    private InvestmentService service;
 
     @BeforeEach
     void setUp() {
-        Type type = new TypeToken<List<Inversion>>() {}.getType();
-        JsonRepository<Inversion> repo1 = new JsonRepository<>(tempDir.resolve("inversions.json").toString(), type);
-        service = new InversionService(repo1);
+        Type type = new TypeToken<List<Investment>>() {}.getType();
+        JsonRepository<Investment> repo1 = new JsonRepository<>(tempDir.resolve("inversions.json").toString(), type);
+        service = new InvestmentService(repo1);
     }
 
     @Test
@@ -41,7 +42,7 @@ class InversionServiceTest {
         LocalDate d = LocalDate.of(2026, 1, 10);
         LocalTime t = LocalTime.of(10, 0);
 
-        service.createInversion("op-1", "inv-1", "a-1", 10, 5.0, d, t, 500.0, RiskProfile.MODERATE, AssetType.BOND);
+        service.createInvestment("op-1", "inv-1", "a-1", 10, 5.0, d, t, 500.0, RiskProfile.MODERATE, AssetType.BOND);
 
         assertEquals(1, service.listInversions().size());
     }

@@ -10,7 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import co.edu.uptc.exception.IncompatibleRiskProfileException;
 import co.edu.uptc.exception.InsufficientCapitalException;
 import co.edu.uptc.model.Asset;
-import co.edu.uptc.model.Inversion;
+import co.edu.uptc.model.Investment;
 import co.edu.uptc.model.enums.AssetType;
 import co.edu.uptc.model.enums.RiskProfile;
 import co.edu.uptc.repository.JsonRepository;
@@ -19,15 +19,15 @@ import co.edu.uptc.repository.JsonRepository;
  * Servicio de inversiones individuales: creación con validaciones de negocio (capital y perfil de
  * riesgo frente al activo) y cálculos de valor actual, rendimiento porcentual y ganancia o pérdida monetaria.
  */
-public class InversionService {
-    private final JsonRepository<Inversion> repo;
+public class InvestmentService {
+    private final JsonRepository<Investment> repo;
     private AssetService assetService;
-    public InversionService() {
-        Type type = new TypeToken<List<Inversion>>() {}.getType();
+    public InvestmentService() {
+        Type type = new TypeToken<List<Investment>>() {}.getType();
         this.repo = new JsonRepository<>("inversions.json", type);
     }
 
-    public InversionService(JsonRepository<Inversion> repo) {
+    public InvestmentService(JsonRepository<Investment> repo) {
         this.repo = repo;
     }
 
@@ -50,7 +50,7 @@ public class InversionService {
      * @throws InsufficientCapitalException si el capital es insuficiente
      * @throws IncompatibleRiskProfileException si el perfil de riesgo no permite el activo
      */
-    public void createInversion(String id, String inversionistId, String assetId, double amount,double currentValue,
+    public void createInvestment(String id, String inversionistId, String assetId, double amount,double currentValue,
             double yieldPercentage, double purchasePrice, 
             LocalDate date, LocalTime time, double availableCapital, RiskProfile riskProfile, AssetType assetType){
         
@@ -64,7 +64,7 @@ public class InversionService {
         // validar riesgo
         validateRiskProfile(riskProfile, assetType);
 
-        Inversion inversion=new Inversion(id, inversionistId, assetId, amount, currentValue, yieldPercentage, purchasePrice, date, time);
+        Investment inversion=new Investment(id, inversionistId, assetId, amount, currentValue, yieldPercentage, purchasePrice, date, time);
 
         try {
             repo.save(inversion);
@@ -76,9 +76,9 @@ public class InversionService {
     /**
      * Devuelve todas las inversiones registradas en persistencia.
      *
-     * @return lista de {@link Inversion}; puede estar vacía
+     * @return lista de {@link Investment}; puede estar vacía
      */
-    public List<Inversion> listInversions() {
+    public List<Investment> listInvestments() {
         try {
             return repo.findAll();
         } catch (RuntimeException e) {
@@ -112,7 +112,7 @@ public class InversionService {
     }
 
     //Consultar historial de inversiones de un inversionista 
-    public List<Inversion> getInvestmentsByInvestorId(String investorId) {
+    public List<Investment> getInvestmentsByInvestorId(String investorId) {
         return repo.findAll().stream()
                 .filter(inv -> inv.getInversionistId().equals(investorId))
                 .collect(Collectors.toList());
@@ -151,10 +151,10 @@ public class InversionService {
         assetService.updAssetPrice(assetId, newPrice);
 
         // 2. Traemos TODAS las inversiones de la base de datos/JSON
-        List<Inversion> investments = repo.findAll();
+        List<Investment> investments = repo.findAll();
         boolean hasChanges = false;
         // 3. Iteramos para buscar a quiénes les afecta este cambio
-        for (Inversion investment : investments) {
+        for (Investment investment : investments) {
             // Verificamos si la inversión contiene el activo modificado
             if (investment.getAssetId().equals(assetId)) {
                 // 4. Usamos tus métodos para calcular los nuevos valores
@@ -179,7 +179,7 @@ public class InversionService {
      *
      * @param investment inversion a la que se le actualizó el valor
      * @return valor actual de la inversión
-     */public double calculateActualValue(Inversion investment) {
+     */public double calculateActualValue(Investment investment) {
         // 1. Usamos el ID guardado en la inversión para ir a buscar el Activo real
         Asset asset = assetService.findById(investment.getAssetId());
         
@@ -197,7 +197,7 @@ public class InversionService {
      * @param investment inversion a la que se le va a calcular el rendimiento
      * @return rendimiento en porcentaje
      */
-    public double calculateYieldPercentage(Inversion investment) {
+    public double calculateYieldPercentage(Investment investment) {
         // 1. Calculamos el valor actual usando el método de arriba
         double valorActual = calculateActualValue(investment);
         double inversionInicial = investment.getPurchasePrice(); // Lo que pagó al comprar

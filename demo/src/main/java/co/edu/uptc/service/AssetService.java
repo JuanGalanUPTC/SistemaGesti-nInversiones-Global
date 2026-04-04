@@ -116,20 +116,13 @@ public class AssetService {
      * @throws AssetNotFoundException si no existe un activo con el identificador indicado
      */
     public double getPrice(String assetId) {
-        try {
-            List<Asset> assets = repo.findAll();
-
-            for (Asset asset : assets) {
-                if (asset.getId().equals(assetId)) {
-                    return asset.getActualPrice();
-                }
-            }
-
-            throw new AssetNotFoundException("Asset not found with that id.");
-        } catch (AssetNotFoundException e) {
-            throw e;
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Error getting the price of the asset.", e);
+        // Reutilizamos la lógica que ya creaste arriba
+        Asset asset = findById(assetId);
+        
+        if (asset != null) {
+            return asset.getActualPrice();
+        } else {
+            throw new AssetNotFoundException("Asset not found with that id: " + assetId);
         }
     }
 }

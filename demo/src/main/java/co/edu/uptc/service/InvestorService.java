@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 import co.edu.uptc.exception.InsufficientCapitalException;
 import co.edu.uptc.exception.InvestorNotFoundException;
-import co.edu.uptc.model.Inversion;
+import co.edu.uptc.model.Investment;
 import co.edu.uptc.model.Investor;
 import co.edu.uptc.model.enums.RiskProfile;
 import co.edu.uptc.repository.JsonRepository;
@@ -41,7 +41,7 @@ public class InvestorService {
      * @param inversions no utilizado; se persiste siempre una lista vacía al crear
      */
     public void createInvestor(String id, String name, String email, double availableCapital, RiskProfile riskProfile,
-            List<Inversion> inversions) {
+            List<Investment> inversions) {
         try {
             repo.save(new Investor(id, name, email, availableCapital, riskProfile, new ArrayList<>()));
         } catch (RuntimeException e) {

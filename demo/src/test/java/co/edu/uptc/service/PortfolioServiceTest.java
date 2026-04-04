@@ -16,7 +16,7 @@ import org.junit.jupiter.api.io.TempDir;
 import com.google.gson.reflect.TypeToken;
 
 import co.edu.uptc.model.Asset;
-import co.edu.uptc.model.Inversion;
+import co.edu.uptc.model.Investment;
 import co.edu.uptc.model.enums.AssetType;
 import co.edu.uptc.repository.JsonRepository;
 
@@ -33,9 +33,9 @@ class PortfolioServiceTest {
         JsonRepository<Asset> assetRepo = new JsonRepository<>(tempDir.resolve("assets.json").toString(), assetListType);
         AssetService assetService = new AssetService(assetRepo);
 
-        Type invListType = new TypeToken<List<Inversion>>() {}.getType();
-        JsonRepository<Inversion> invRepo = new JsonRepository<>(tempDir.resolve("inversions.json").toString(), invListType);
-        InversionService inversionService = new InversionService(invRepo);
+        Type invListType = new TypeToken<List<Investment>>() {}.getType();
+        JsonRepository<Investment> invRepo = new JsonRepository<>(tempDir.resolve("inversions.json").toString(), invListType);
+        InvestmentService inversionService = new InvestmentService(invRepo);
 
         portfolioService = new PortfolioService(inversionService, assetService);
 
@@ -53,8 +53,8 @@ class PortfolioServiceTest {
 
     @Test
     void calculateEarningsByPeriod_sumsOnlyInversionsInRange() {
-        Inversion inside = new Inversion("1", "inv", "A1", 2, 4.0, LocalDate.of(2026, 1, 15), LocalTime.NOON);
-        Inversion outside = new Inversion("2", "inv", "A1", 1, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
+        Investment inside = new Investment("1", "inv", "A1", 2, 4.0, LocalDate.of(2026, 1, 15), LocalTime.NOON);
+        Investment outside = new Investment("2", "inv", "A1", 1, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
 
         double total = portfolioService.calculateEarningsByPeriod(
                 List.of(inside, outside),
@@ -66,7 +66,7 @@ class PortfolioServiceTest {
 
     @Test
     void calculateEarningsByPeriod_returnsZeroWhenNoMatches() {
-        Inversion outside = new Inversion("2", "inv", "A1", 1, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
+        Investment outside = new Investment("2", "inv", "A1", 1, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
 
         double total = portfolioService.calculateEarningsByPeriod(
                 List.of(outside),
