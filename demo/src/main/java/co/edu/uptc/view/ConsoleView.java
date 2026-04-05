@@ -9,6 +9,10 @@ import java.util.Scanner;
 import co.edu.uptc.exception.OperationCancelledException;
 
 public class ConsoleView {
+
+    public String readDateInput(String messageKey) {
+        return readStringInput(messageKey); 
+    }
     
     private final Scanner scanner;
     private ResourceBundle messages;
@@ -54,6 +58,24 @@ public class ConsoleView {
     public void printText(String text) {
         System.out.println(getLocalizedText(text));
     }
+
+    public void showTotalProfits(double total) {
+        System.out.println(getLocalizedText("msg.report.total") + total);
+    }
+
+    public void showTopInvestors(java.util.List<java.util.Map.Entry<String, Double>> list) {
+        System.out.println(getLocalizedText("msg.report.top"));
+        int i = 1;
+        for (var entry : list) {
+            System.out.println(i + ". " + entry.getKey() + " -> " + entry.getValue());
+            i++;
+        }
+    }
+
+    public void showExportSuccess(String fileName) {
+        System.out.println(getLocalizedText("msg.report.exported") + fileName);
+    }
+
 
     // ---------------- MÉTODOS DE ENTRADA (INPUT) ----------------
 
@@ -127,5 +149,14 @@ public class ConsoleView {
         System.out.println(getLocalizedText("menu.investor.option.3"));
         System.out.println(getLocalizedText("menu.investor.option.4"));
         System.out.println(getLocalizedText("menu.investor.option.0"));
+    }
+
+    public void showReportsMenu() {
+        System.out.println("\n" + getLocalizedText("menu.reports.title"));
+        System.out.println(getLocalizedText("menu.reports.option.1")); // Ganancias
+        System.out.println(getLocalizedText("menu.reports.option.2")); // Top 5
+        System.out.println(getLocalizedText("menu.reports.option.3")); // Export CSV
+        System.out.println(getLocalizedText("menu.reports.option.4")); // Export JSON
+        System.out.println(getLocalizedText("menu.option.0"));
     }
 }
