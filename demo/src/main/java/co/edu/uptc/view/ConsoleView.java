@@ -6,6 +6,8 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import co.edu.uptc.exception.OperationCancelledException;
+
 public class ConsoleView {
     
     private final Scanner scanner;
@@ -55,9 +57,33 @@ public class ConsoleView {
 
     // ---------------- MÉTODOS DE ENTRADA (INPUT) ----------------
 
-    public String readStringInput(String promptKey) {
-        System.out.print(getLocalizedText(promptKey) + " ");
-        return scanner.nextLine();
+   public String readStringInput(String messageKey) {
+        // Obtenemos el texto principal de la pregunta (ej: "Ingrese ID:")
+        String prompt = getLocalizedText(messageKey);
+        
+        // Obtenemos el texto de la pista para cancelar según el idioma actual
+        String cancelHint = getLocalizedText("msg.info.cancelHint");
+        
+        // Imprimimos la combinación de ambos
+        System.out.print(prompt + cancelHint); 
+        
+        String input = scanner.nextLine().trim();
+        
+        if (input.equalsIgnoreCase("x")) {
+            throw new OperationCancelledException(getLocalizedText("msg.info.processCancelled"));
+        }
+        
+        return input;
+    }
+    public double readDoubleInput(String messageKey) {
+        while (true) {
+            try {
+                String input = readStringInput(messageKey); // Reutilizamos readStringInput que ya tiene la lógica de la "X"
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                System.out.println(getLocalizedText("msg.error.invalidNumber"));
+            }
+        }
     }
 
     public int readIntInput(String promptKey) {
@@ -66,20 +92,6 @@ public class ConsoleView {
                 System.out.print(getLocalizedText(promptKey) + " ");
                 int input = scanner.nextInt();
                 scanner.nextLine(); // Limpiar el "Enter" que queda en el buffer
-                return input;
-            } catch (InputMismatchException e) {
-                System.out.println(getLocalizedText("msg.error.invalid"));
-                scanner.nextLine(); // Limpiar la basura del buffer
-            }
-        }
-    }
-
-    public double readDoubleInput(String promptKey) {
-        while (true) {
-            try {
-                System.out.print(getLocalizedText(promptKey) + " ");
-                double input = scanner.nextDouble();
-                scanner.nextLine(); // Limpiar el "Enter"
                 return input;
             } catch (InputMismatchException e) {
                 System.out.println(getLocalizedText("msg.error.invalid"));

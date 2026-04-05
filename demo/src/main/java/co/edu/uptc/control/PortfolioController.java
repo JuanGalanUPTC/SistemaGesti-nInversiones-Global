@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import co.edu.uptc.exception.OperationCancelledException;
 import co.edu.uptc.model.Investment;
 import co.edu.uptc.model.Investor;
 import co.edu.uptc.service.InvestmentService;
@@ -21,35 +22,36 @@ public class PortfolioController {
         this.investmentService = investmentService;
         this.view = view;
     }
-public void handleTop5InvestorsReport() {
-    try {
-        view.showMessageByKey("msg.title.top5Investors");
 
-        List<Investor> topInvestors = portfolioService.getTop5InvestorsByYield();
+    public void handleTop5InvestorsReport() {
+        try {
+            view.showMessageByKey("msg.title.top5Investors");
 
-        if (topInvestors.isEmpty()) {
-            view.showMessageByKey("msg.error.notEnoughData");
-            return;
+            List<Investor> topInvestors = portfolioService.getTop5InvestorsByYield();
+
+            if (topInvestors.isEmpty()) {
+                view.showMessageByKey("msg.error.notEnoughData");
+                return;
+            }
+
+            int rank = 1;
+            for (Investor inv : topInvestors) {
+                double totalInvested = portfolioService.calculateTotalInvested(inv);
+                double currentValue = portfolioService.calculateCurrentPortfolioValue(inv);
+                double yieldPercent = ((currentValue - totalInvested) / totalInvested) * 100.0;
+
+                String formattedLine = String.format(view.getLocalizedText("msg.format.topInvestor"), 
+                        rank, inv.getName(), yieldPercent, currentValue);
+                
+                view.printText(formattedLine);
+                rank++;
+            }
+        } catch (RuntimeException e) {
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
-
-        int rank = 1;
-        for (Investor inv : topInvestors) {
-            double totalInvested = portfolioService.calculateTotalInvested(inv);
-            double currentValue = portfolioService.calculateCurrentPortfolioValue(inv);
-            double yieldPercent = ((currentValue - totalInvested) / totalInvested) * 100.0;
-
-            // Obtenemos el formato localizado y lo llenamos con los datos del ranking
-            String formattedLine = String.format(view.getLocalizedText("msg.format.topInvestor"), 
-                    rank, inv.getName(), yieldPercent, currentValue);
-            
-            view.printText(formattedLine);
-            rank++;
-        }
-    } catch (RuntimeException e) {
-        view.showMessageByKey("msg.error.system");
-        view.printText(e.getMessage());
     }
-}
+
     /**
      * Genera un reporte de ganancias y pérdidas de TODAS las inversiones del sistema en un rango de fechas.
      */
@@ -60,18 +62,21 @@ public void handleTop5InvestorsReport() {
             LocalDate startDate = promptForDate("msg.input.startDate");
             LocalDate endDate = promptForDate("msg.input.endDate");
 
-            // Obtenemos todas las inversiones del sistema
             List<Investment> allInvestments = investmentService.listInvestments();
-
-            // Usamos tu servicio para calcular el total
             double totalEarnings = portfolioService.calculateEarningsByPeriod(allInvestments, startDate, endDate);
 
             printReportResult(startDate, endDate, totalEarnings);
 
+        } catch (OperationCancelledException e) {
+            // Atrapa limpiamente la cancelación ("X")
+            view.printText(e.getMessage());
         } catch (IllegalArgumentException e) {
-            view.printText("❌ Regla de negocio: " + e.getMessage()); // Atrapa "Start date cannot be after end date"
+            // Atrapa errores de negocio (fechas invertidas)
+            view.printText("Error: " + e.getMessage()); 
         } catch (RuntimeException e) {
-            view.printText("❌ Operación cancelada o error en el reporte: " + e.getMessage());
+            // Atrapa cualquier otro fallo inesperado
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -83,10 +88,11 @@ public void handleTop5InvestorsReport() {
             view.showMessageByKey("msg.title.investorReport");
             
             String investorId = view.readStringInput("msg.input.investorId");
+            
+            // Si obtuvimos el ID y el usuario no cancelo, procedemos con las fechas
             LocalDate startDate = promptForDate("msg.input.startDate");
             LocalDate endDate = promptForDate("msg.input.endDate");
 
-            // Obtenemos solo las inversiones de ese inversionista
             List<Investment> investorPortfolio = investmentService.getInvestmentsByInvestorId(investorId);
 
             if (investorPortfolio.isEmpty()) {
@@ -94,15 +100,17 @@ public void handleTop5InvestorsReport() {
                 return;
             }
 
-            // Usamos tu MISMO servicio (¡Magia de la reutilización de código!)
             double totalEarnings = portfolioService.calculateEarningsByPeriod(investorPortfolio, startDate, endDate);
 
             printReportResult(startDate, endDate, totalEarnings);
 
+        } catch (OperationCancelledException e) {
+            view.printText(e.getMessage());
         } catch (IllegalArgumentException e) {
-            view.printText("❌ Regla de negocio: " + e.getMessage());
+            view.printText("Error: " + e.getMessage());
         } catch (RuntimeException e) {
-            view.printText("❌ Operación cancelada o error en el reporte: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -113,32 +121,36 @@ public void handleTop5InvestorsReport() {
      */
     private LocalDate promptForDate(String messageKey) {
         while (true) {
-            String dateStr = view.readStringInput(messageKey); // En tu properties debe decir algo como: "Ingrese fecha (AAAA-MM-DD):"
+            String dateStr = view.readStringInput(messageKey);
             try {
                 return LocalDate.parse(dateStr);
             } catch (DateTimeParseException e) {
-                view.printText("❌ Error: Formato de fecha inválido. Por favor use AAAA-MM-DD (Ejemplo: 2023-12-31).");
+                // Ahora usamos el properties en lugar del texto en duro
+                view.showMessageByKey("msg.error.invalidDateFormat");
             }
         }
     }
 
     /**
-     * Método auxiliar para imprimir el resultado de forma estilizada y no repetir código.
+     * Método auxiliar para imprimir el resultado de forma estilizada y 100% bilingüe.
      */
     private void printReportResult(LocalDate start, LocalDate end, double earnings) {
         view.printText("\n=========================================");
-        view.printText("📊 REPORTE DEL " + start + " AL " + end);
+        
+        // Imprime el titulo usando String.format para inyectar las fechas en el texto traducido
+        view.printText(String.format(view.getLocalizedText("msg.report.header"), start, end));
         
         if (earnings > 0) {
-            view.printText("📈 Rendimiento Neto: +$" + String.format("%.2f", earnings));
-            view.printText("✅ El portafolio generó GANANCIAS en este periodo.");
+            view.printText(String.format(view.getLocalizedText("msg.report.profit"), earnings));
+            view.showMessageByKey("msg.report.profitDesc");
         } else if (earnings < 0) {
-            view.printText("📉 Rendimiento Neto: -$" + String.format("%.2f", Math.abs(earnings)));
-            view.printText("⚠️ El portafolio generó PÉRDIDAS en este periodo.");
+            view.printText(String.format(view.getLocalizedText("msg.report.loss"), Math.abs(earnings)));
+            view.showMessageByKey("msg.report.lossDesc");
         } else {
-            view.printText("⚖️ Rendimiento Neto: $0.00");
-            view.printText("El portafolio se mantuvo en punto de equilibrio.");
+            view.showMessageByKey("msg.report.even");
+            view.showMessageByKey("msg.report.evenDesc");
         }
+        
         view.printText("=========================================\n");
     }
 }

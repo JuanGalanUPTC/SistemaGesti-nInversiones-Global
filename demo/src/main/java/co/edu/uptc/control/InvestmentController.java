@@ -6,6 +6,7 @@ import java.util.List;
 
 import co.edu.uptc.exception.IncompatibleRiskProfileException;
 import co.edu.uptc.exception.InsufficientCapitalException;
+import co.edu.uptc.exception.OperationCancelledException;
 import co.edu.uptc.model.Investor; 
 import co.edu.uptc.model.Asset;
 import co.edu.uptc.model.Investment;
@@ -21,7 +22,6 @@ public class InvestmentController {
     private final InvestorService investorService;
     private final ConsoleView view;
 
-    // Inyección de dependencias con los nombres actualizados
     public InvestmentController(InvestmentService investmentService, 
                                 AssetService assetService, 
                                 InvestorService investorService, 
@@ -39,48 +39,47 @@ public class InvestmentController {
         try {
             view.showMessageByKey("msg.title.createInvestment");
 
-            // 1. Pedimos solo los datos de entrada básicos
             String investmentId = view.readStringInput("msg.input.investmentId");
             String investorId = view.readStringInput("msg.input.investorId");
             String assetId = view.readStringInput("msg.input.assetId");
             double amount = view.readDoubleInput("msg.input.amount");
 
-            // 2. Buscamos las entidades para obtener sus datos internos
             Asset asset = assetService.findById(assetId);
             if (asset == null) {
-                view.printText("❌ Error: No se encontró un activo con el ID indicado.");
+                view.showMessageByKey("msg.error.assetNotFound");
                 return; 
             }
 
             Investor investor = investorService.findById(investorId);
             if (investor == null) {
-                view.printText("❌ Error: No se encontró un inversionista con el ID indicado.");
+                view.showMessageByKey("msg.error.investorNotFound");
                 return;
             }
 
-            // 3. Preparamos los datos automáticos para la creación
             double purchasePrice = asset.getActualPrice();
             double currentValue = purchasePrice * amount; 
             double yieldPercentage = 0.0; 
             LocalDate date = LocalDate.now();
             LocalTime time = LocalTime.now();
 
-            // 4. Delegamos la creación al servicio con toda la info recopilada
             investmentService.createInvestment(
                 investmentId, investorId, assetId, amount, currentValue, yieldPercentage, 
                 purchasePrice, date, time, 
                 investor.getAvailableCapital(), investor.getRiskProfile(), asset.getAssetType()
             );
 
-            // 5. IMPORTANTE: Aquí deberías descontar el capital del inversionista
+            // IMPORTANTE: Aquí deberías descontar el capital del inversionista
             // investorService.deductCapital(investorId, currentValue);
 
             view.showMessageByKey("msg.success.investmentCreated");
 
+        } catch (OperationCancelledException e) {
+            view.printText(e.getMessage());
         } catch (InsufficientCapitalException | IncompatibleRiskProfileException e) {
-            view.printText("❌ Regla de Negocio: " + e.getMessage());
+            view.printText("Regla de Negocio: " + e.getMessage());
         } catch (RuntimeException e) {
-            view.printText("❌ Error del sistema: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -100,7 +99,8 @@ public class InvestmentController {
                 }
             }
         } catch (RuntimeException e) {
-            view.printText("Error al listar inversiones: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -124,10 +124,14 @@ public class InvestmentController {
                     totalPortfolioValue += inv.getCurrentValue();
                 }
                 
-                view.printText("\n--- VALOR TOTAL DEL PORTAFOLIO: $" + totalPortfolioValue + " ---");
+                String totalMsg = String.format(view.getLocalizedText("msg.info.totalPortfolioValue"), totalPortfolioValue);
+                view.printText(totalMsg);
             }
+        } catch (OperationCancelledException e) {
+            view.printText(e.getMessage());
         } catch (RuntimeException e) {
-            view.printText("Error al consultar el portafolio: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -145,8 +149,10 @@ public class InvestmentController {
             
             view.showMessageByKey("msg.success.marketUpdated");
 
+        } catch (OperationCancelledException e) {
+            view.printText(e.getMessage());
         } catch (RuntimeException e) {
-            view.printText("❌ Error al actualizar el mercado: " + e.getMessage());
+            view.printText("Error: " + e.getMessage());
         }
     }
 
@@ -157,11 +163,11 @@ public class InvestmentController {
         double initialInvestment = investmentService.calculateInitialInvestment(inv.getPurchasePrice(), inv.getAmount());
         double earnings = investmentService.calculateEarnings(inv.getCurrentValue(), initialInvestment);
         
-        String earningsStr = (earnings >= 0) ? "(+$" + earnings + ")" : "(-$" + Math.abs(earnings) + ")";
+        String earningsStr = (earnings >= 0) ? "(+$" + String.format("%.2f", earnings) + ")" : "(-$" + String.format("%.2f", Math.abs(earnings)) + ")";
 
-        view.printText(String.format(
-            "- [ID: %s] Activo: %s | Cantidad: %.2f | Valor Actual: $%.2f | Rendimiento: %.2f%% %s",
-            inv.getId(), inv.getAssetId(), inv.getAmount(), inv.getCurrentValue(), inv.getYieldPercentage(), earningsStr
-        ));
+        String detailLine = String.format(view.getLocalizedText("msg.format.investmentDetail"),
+            inv.getId(), inv.getAssetId(), inv.getAmount(), inv.getCurrentValue(), inv.getYieldPercentage(), earningsStr);
+        
+        view.printText(detailLine);
     }
 }

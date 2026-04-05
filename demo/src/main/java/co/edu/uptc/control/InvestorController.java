@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.uptc.exception.InvestorNotFoundException;
+import co.edu.uptc.exception.OperationCancelledException;
 import co.edu.uptc.model.Investor;
 import co.edu.uptc.model.enums.RiskProfile;
 import co.edu.uptc.service.InvestorService;
@@ -22,43 +23,32 @@ public class InvestorController {
     /**
      * Maneja el registro de un nuevo inversionista.
      */
-    public void handleCreateInvestor() {
+ public void handleCreateInvestor() {
         try {
             view.showMessageByKey("msg.title.createInvestor");
 
+            // Si en cualquiera de estos pasos el usuario digita "X", 
+            // el codigo salta directamente al catch de OperationCancelledException
             String id = view.readStringInput("msg.input.investorId");
             String name = view.readStringInput("msg.input.investorName");
             String email = view.readStringInput("msg.input.investorEmail");
             double capital = view.readDoubleInput("msg.input.availableCapital");
-
             String riskStr = view.readStringInput("msg.input.riskProfile").trim().toUpperCase(); 
             
             RiskProfile riskProfile;
             switch (riskStr) {
-                // Si escribe en español o inglés, lo asociamos al Enum correcto
-                case "CONSERVADOR":
-                case "CONSERVATIVE":
-                    riskProfile = RiskProfile.CONSERVATIVE; // Cambia esto si en tu Enum está en español
-                    break;
-                case "MODERADO":
-                case "MODERATE":
-                    riskProfile = RiskProfile.MODERATE;
-                    break;
-                case "AGRESIVO":
-                case "AGGRESSIVE":
-                    riskProfile = RiskProfile.AGRESSIVE;
-                    break;
-                default:
-                    // Si escribe cualquier otra cosa ("hola", "perro", etc.), forzamos el error
-                    throw new IllegalArgumentException("Perfil inválido");
+                case "CONSERVADOR": case "CONSERVATIVE": riskProfile = RiskProfile.CONSERVATIVE; break;
+                case "MODERADO": case "MODERATE": riskProfile = RiskProfile.MODERATE; break;
+                case "AGRESIVO": case "AGGRESSIVE": riskProfile = RiskProfile.AGGRESSIVE; break;
+                default: throw new IllegalArgumentException("Perfil invalido");
             }
 
-            // Enviamos la lista vacía al momento de la creación...
-
-            // Enviamos la lista vacía al momento de la creación tal como lo requiere tu servicio
             investorService.createInvestor(id, name, email, capital, riskProfile, new ArrayList<>());
             view.showMessageByKey("msg.success.investorCreated");
 
+        } catch (OperationCancelledException e) {
+            // Aqui atrapamos la X y mostramos el mensaje de cancelacion
+            view.printText(e.getMessage());
         } catch (IllegalArgumentException e) {
             view.showMessageByKey("msg.error.invalidRisk");
         } catch (RuntimeException e) {
@@ -72,24 +62,25 @@ public class InvestorController {
      * @return El ID del inversionista si el login es exitoso, o null si falla/cancela.
      */
     public String handleLogin() {
-        view.showMessageByKey("msg.title.login");
-        String id = view.readStringInput("msg.input.loginId");
-        
-        if (id.equalsIgnoreCase("x")) {
-            return null;
-        }
-
         try {
+            view.showMessageByKey("msg.title.login");
+            // Si el usuario escribe X, readStringInput lanzara OperationCancelledException
+            String id = view.readStringInput("msg.input.loginId");
+
             Investor loggedInUser = investorService.findById(id);
 
             if (loggedInUser != null) {
                 view.showMessageByKey("msg.success.loginWelcome");
-                view.printText("🧑‍💼 " + loggedInUser.getName()); // Imprimimos el nombre justo debajo
+                view.printText(loggedInUser.getName()); // Emoji removido
                 return loggedInUser.getId(); 
             } else {
                 view.showMessageByKey("msg.error.loginFailed");
                 return null;
             }
+        } catch (OperationCancelledException e) {
+            // Atrapamos la excepcion si el usuario decide cancelar el login
+            view.printText(e.getMessage());
+            return null;
         } catch (RuntimeException e) {
             view.showMessageByKey("msg.error.loginSystem");
             view.printText(e.getMessage());
@@ -139,7 +130,7 @@ public class InvestorController {
             view.showMessageByKey("msg.success.investorUpdated");
 
         } catch (InvestorNotFoundException | IllegalArgumentException e) {
-            view.printText("❌ " + e.getMessage()); 
+            view.printText(e.getMessage()); 
         } catch (RuntimeException e) {
             view.showMessageByKey("msg.error.update");
             view.printText(e.getMessage());

@@ -63,7 +63,7 @@ class InvestorServiceTest {
 
     @Test
     void updateCapital_throwsInsufficientCapital() {
-        service.createInvestor("inv-3", "Bea", "bea@test.com", 50.0, RiskProfile.AGRESSIVE, Collections.emptyList());
+        service.createInvestor("inv-3", "Bea", "bea@test.com", 50.0, RiskProfile.AGGRESSIVE, Collections.emptyList());
 
         assertThrows(InsufficientCapitalException.class, () -> service.updateCapital("inv-3", 100.0));
     }
@@ -75,9 +75,9 @@ class InvestorServiceTest {
 
     @Test
     void getRiskProfile_returnsProfile() {
-        service.createInvestor("inv-4", "Cris", "cris@test.com", 100.0, RiskProfile.AGRESSIVE, Collections.emptyList());
+        service.createInvestor("inv-4", "Cris", "cris@test.com", 100.0, RiskProfile.AGGRESSIVE, Collections.emptyList());
 
-        assertEquals(RiskProfile.AGRESSIVE, service.getRiskProfile("inv-4"));
+        assertEquals(RiskProfile.AGGRESSIVE, service.getRiskProfile("inv-4"));
     }
 
     @Test

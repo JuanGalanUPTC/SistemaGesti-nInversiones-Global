@@ -5,6 +5,7 @@ import co.edu.uptc.model.enums.AssetType;
 import co.edu.uptc.service.AssetService;
 import co.edu.uptc.view.ConsoleView;
 import co.edu.uptc.exception.AssetNotFoundException;
+import co.edu.uptc.exception.OperationCancelledException;
 
 import java.util.List;
 
@@ -23,29 +24,27 @@ public class AssetController {
      */
     public void handleCreateAsset() {
         try {
-            // Usamos las llaves del archivo properties para los mensajes
             view.showMessageByKey("msg.title.createAsset");
             
             String id = view.readStringInput("msg.input.assetId");
             String name = view.readStringInput("msg.input.assetName");
             String typeStr = view.readStringInput("msg.input.assetType");
             
-            // Convertimos el texto ingresado al Enum correspondiente
             AssetType type = AssetType.valueOf(typeStr.toUpperCase());
             
-            // Usamos el nuevo método de la vista que valida y lee decimales automáticamente
             double price = view.readDoubleInput("msg.input.assetPrice");
             double volatility = view.readDoubleInput("msg.input.assetVolatility");
 
             assetService.createAsset(id, name, type, price, volatility);
             view.showMessageByKey("msg.success.assetCreated");
 
+        } catch (OperationCancelledException e) {
+            view.printText(e.getMessage());
         } catch (IllegalArgumentException e) {
-            // Se ejecuta si el usuario escribe algo como "PERRO" en lugar de "ACCION"
             view.showMessageByKey("msg.error.invalidAssetType");
         } catch (RuntimeException e) {
-            // Imprimimos el error dinámico usando printText
-            view.printText("Error del sistema: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -61,14 +60,15 @@ public class AssetController {
                 view.showMessageByKey("msg.error.noAssets");
             } else {
                 for (Asset asset : assets) {
-                    // Usamos printText porque estamos combinando datos dinámicos de los objetos
-                    view.printText("- [" + asset.getId() + "] " + asset.getName() + 
-                            " | Tipo: " + asset.getAssetType() + 
-                            " | Precio: $" + asset.getActualPrice());
+                    // Usamos el format localizado
+                    String detailLine = String.format(view.getLocalizedText("msg.format.assetDetail"), 
+                        asset.getId(), asset.getName(), asset.getAssetType(), asset.getActualPrice());
+                    view.printText(detailLine);
                 }
             }
         } catch (RuntimeException e) {
-            view.printText("Error al listar los activos: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -85,11 +85,13 @@ public class AssetController {
             assetService.updAssetPrice(id, newPrice);
             view.showMessageByKey("msg.success.priceUpdated");
 
+        } catch (OperationCancelledException e) {
+            view.printText(e.getMessage());
         } catch (AssetNotFoundException e) {
-            // Como la excepción trae su propio mensaje, usamos printText
             view.printText(e.getMessage());
         } catch (RuntimeException e) {
-            view.printText("Error al actualizar el precio: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 
@@ -109,11 +111,17 @@ public class AssetController {
                 view.showMessageByKey("msg.error.noAssetsInRange");
             } else {
                 for (Asset asset : assets) {
-                    view.printText("- " + asset.getName() + " ($" + asset.getActualPrice() + ")");
+                    // Formato localizado para búsqueda simple
+                    String line = String.format(view.getLocalizedText("msg.format.assetSimpleDetail"), 
+                        asset.getName(), asset.getActualPrice());
+                    view.printText(line);
                 }
             }
+        } catch (OperationCancelledException e) {
+            view.printText(e.getMessage());
         } catch (RuntimeException e) {
-            view.printText("Error al buscar: " + e.getMessage());
+            view.showMessageByKey("msg.error.system");
+            view.printText(e.getMessage());
         }
     }
 }
