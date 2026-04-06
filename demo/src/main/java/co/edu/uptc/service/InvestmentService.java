@@ -51,12 +51,10 @@ public class InvestmentService {
      * @throws InsufficientCapitalException si el capital es insuficiente
      * @throws IncompatibleRiskProfileException si el perfil de riesgo no permite el activo
      */
-    public Investment createInvestment(String id, String inversionistId, String assetId, double amount,double currentValue,
-            double yieldPercentage, double purchasePrice, 
+    public Investment createInvestment(String id, String inversionistId, String assetId, double amount, double purchasePrice,
             LocalDate date, LocalTime time, double availableCapital, RiskProfile riskProfile, AssetType assetType){
         
         purchasePrice = calculatePurchasePrice(assetService.findById(assetId).getActualPrice(), amount);
-        currentValue= purchasePrice;
         
         System.out.println("Capital disponible recibido: " + availableCapital);
         System.out.println("Precio total inversión: " + purchasePrice);
@@ -68,7 +66,7 @@ public class InvestmentService {
         // validar riesgo
         validateRiskProfile(riskProfile, assetType);
 
-        return new Investment(id, inversionistId, assetId, amount, currentValue, yieldPercentage, purchasePrice, date, time);
+        return new Investment(id, inversionistId, assetId, amount, purchasePrice, date, time);
     }
 
     /**
@@ -144,32 +142,9 @@ public class InvestmentService {
     }
     
     public void updateAssetPriceProcces(String assetId, double newPrice) {
-        
-        // 1. Actualizamos el precio del activo (Esto actualiza activos.json)
+        // Solo se actualiza el precio del activo. El valor/rendimiento de cada inversión
+        // se calcula dinámicamente al consultar, por eso no se persiste aquí.
         assetService.updAssetPrice(assetId, newPrice);
-
-        // 2. Traemos TODAS las inversiones de la base de datos/JSON
-        List<Investment> investments = repo.findAll();
-        boolean hasChanges = false;
-        // 3. Iteramos para buscar a quiénes les afecta este cambio
-        for (Investment investment : investments) {
-            // Verificamos si la inversión contiene el activo modificado
-            if (investment.getAssetId().equals(assetId)) {
-                // 4. Usamos tus métodos para calcular los nuevos valores
-                double newValue = calculateCurrentValue(investment);
-                double newYield = calculateYieldPercentage(investment);
-                // 5. Actualizamos la inversión (Asumiendo que tienes estos setters en tu clase Inversion)
-                investment.setCurrentValue(newValue);
-                investment.setYieldPercentage(newYield);
-
-                hasChanges = true; // Marcamos que hubo al menos una modificación
-            }
-        }
-
-        // 6. Si hubo cambios, sobrescribimos el archivo de inversiones
-        if (hasChanges) {
-            repo.replaceAll(investments); // Esto actualiza inversiones.json
-        }
     }
     /**
      * Calcula el valor actual de la posición: cantidad multiplicada por el precio vigente del activo.

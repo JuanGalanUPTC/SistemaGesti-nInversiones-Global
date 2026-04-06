@@ -40,8 +40,7 @@ class InvestmentServiceTest {
 
         Type type = new TypeToken<List<Investment>>() {}.getType();
         JsonRepository<Investment> repo1 = new JsonRepository<>(tempDir.resolve("inversions.json").toString(), type);
-        //service = new InvestmentService(repo1);
-        //service.setAssetService(assetService);
+        service = new InvestmentService(repo1, assetService);
     }
 
     @Test
@@ -49,9 +48,9 @@ class InvestmentServiceTest {
         LocalDate d = LocalDate.of(2026, 1, 10);
         LocalTime t = LocalTime.of(10, 0);
 
-        service.createInvestment("op-1", "inv-1", "a-1", 10, 50.0, 0.0, 5.0, d, t, 500.0, RiskProfile.MODERATE, AssetType.BOND);
-
-        assertEquals(1, service.listInvestments().size());
+        Investment inv = service.createInvestment("op-1", "inv-1", "a-1", 10, 5.0, d, t, 500.0, RiskProfile.MODERATE, AssetType.BOND);
+        assertEquals("op-1", inv.getId());
+        assertEquals(100.0, inv.getPurchasePrice(), 0.0001);
     }
 
     @Test
@@ -60,7 +59,8 @@ class InvestmentServiceTest {
         LocalTime t = LocalTime.of(10, 0);
 
         assertThrows(InsufficientCapitalException.class,
-                () -> service.createInvestment("op-2", "inv-1", "a-1", 10, 50.0, 0.0, 5.0, d, t, 10.0, RiskProfile.MODERATE, AssetType.BOND));
+                () -> service.createInvestment("op-2", "inv-1", "a-1", 10, 5.0, d, t, 10.0, RiskProfile.MODERATE, AssetType.BOND));
+        
     }
 
     @Test
@@ -69,14 +69,14 @@ class InvestmentServiceTest {
         LocalTime t = LocalTime.of(10, 0);
 
         assertThrows(IncompatibleRiskProfileException.class,
-                () -> service.createInvestment("op-3", "inv-1", "a-1", 2, 200.0, 0.0, 100.0, d, t, 500.0, RiskProfile.CONSERVATIVE, AssetType.CRYPTO));
+                () -> service.createInvestment("op-3", "inv-1", "a-1", 2, 100.0, d, t, 500.0, RiskProfile.CONSERVATIVE, AssetType.CRYPTO));
     }
 
     @Test
     void calculateActualValue_multipliesPriceByAmount() {
         LocalDate d = LocalDate.of(2026, 1, 10);
         LocalTime t = LocalTime.NOON;
-        Investment inv = new Investment("x", "inv-1", "a-1", 10, 0.0, 0.0, 5.0, d, t);
+        Investment inv = new Investment("x", "inv-1", "a-1", 10, 5.0, d, t);
         assertEquals(100.0, service.calculateCurrentValue(inv), 0.0001);
     }
 
@@ -95,7 +95,7 @@ class InvestmentServiceTest {
     void calculateYieldPercentage_returnsPercent() {
         LocalDate d = LocalDate.of(2026, 1, 10);
         LocalTime t = LocalTime.NOON;
-        Investment inv = new Investment("y", "inv-1", "yield-asset", 1, 0.0, 0.0, 40.0, d, t);
+        Investment inv = new Investment("y", "inv-1", "yield-asset", 1, 40.0, d, t);
         assertEquals(25.0, service.calculateYieldPercentage(inv), 0.0001);
     }
 
@@ -103,7 +103,7 @@ class InvestmentServiceTest {
     void calculateYieldPercentage_returnsZeroWhenPurchasePriceZero() {
         LocalDate d = LocalDate.of(2026, 1, 10);
         LocalTime t = LocalTime.NOON;
-        Investment inv = new Investment("z", "inv-1", "a-1", 10, 0.0, 0.0, 0.0, d, t);
+        Investment inv = new Investment("z", "inv-1", "a-1", 10, 0.0, d, t);
         assertEquals(0.0, service.calculateYieldPercentage(inv), 0.0001);
     }
 

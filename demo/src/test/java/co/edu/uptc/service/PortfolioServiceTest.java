@@ -35,10 +35,8 @@ class PortfolioServiceTest {
 
         Type invListType = new TypeToken<List<Investment>>() {}.getType();
         JsonRepository<Investment> invRepo = new JsonRepository<>(tempDir.resolve("inversions.json").toString(), invListType);
-        //InvestmentService inversionService = new InvestmentService(invRepo);
-        //inversionService.setAssetService(assetService);
-
-        //portfolioService = new PortfolioService(inversionService, assetService);
+        InvestmentService inversionService = new InvestmentService(invRepo, assetService);
+        portfolioService = new PortfolioService(inversionService, assetService, null);
 
         assetService.createAsset("A1", "Activo prueba", AssetType.BOND, 10.0, 0.0);
     }
@@ -54,8 +52,8 @@ class PortfolioServiceTest {
 
     @Test
     void calculateEarningsByPeriod_sumsOnlyInversionsInRange() {
-        Investment inside = new Investment("1", "inv", "A1", 2, 0.0, 0.0, 4.0, LocalDate.of(2026, 1, 15), LocalTime.NOON);
-        Investment outside = new Investment("2", "inv", "A1", 1, 0.0, 0.0, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
+        Investment inside = new Investment("1", "inv", "A1", 2, 4.0, LocalDate.of(2026, 1, 15), LocalTime.NOON);
+        Investment outside = new Investment("2", "inv", "A1", 1, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
 
         double total = portfolioService.calculateEarningsByPeriod(
                 List.of(inside, outside),
@@ -67,7 +65,7 @@ class PortfolioServiceTest {
 
     @Test
     void calculateEarningsByPeriod_returnsZeroWhenNoMatches() {
-        Investment outside = new Investment("2", "inv", "A1", 1, 0.0, 0.0, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
+        Investment outside = new Investment("2", "inv", "A1", 1, 1.0, LocalDate.of(2025, 12, 1), LocalTime.NOON);
 
         double total = portfolioService.calculateEarningsByPeriod(
                 List.of(outside),

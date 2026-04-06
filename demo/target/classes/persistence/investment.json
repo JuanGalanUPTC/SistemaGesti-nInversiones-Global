@@ -5,8 +5,6 @@
     "assetId": "A1",
     "amount": 5,
     "purchasePrice": 5000,
-    "currentValue": 6000,
-    "yieldPercentage": 20.0,
     "date": "2024-01-10",
     "time": "10:30"
   },
@@ -16,8 +14,6 @@
     "assetId": "A2",
     "amount": 3,
     "purchasePrice": 7500,
-    "currentValue": 7200,
-    "yieldPercentage": -4.0,
     "date": "2024-01-12",
     "time": "11:00"
   },
@@ -27,8 +23,6 @@
     "assetId": "A3",
     "amount": 10,
     "purchasePrice": 4200,
-    "currentValue": 4410,
-    "yieldPercentage": 5.0,
     "date": "2024-01-15",
     "time": "09:45"
   },
@@ -38,8 +32,6 @@
     "assetId": "A4",
     "amount": 1,
     "purchasePrice": 150000,
-    "currentValue": 155000,
-    "yieldPercentage": 3.33,
     "date": "2024-01-18",
     "time": "14:20"
   },
@@ -49,8 +41,6 @@
     "assetId": "A5",
     "amount": 1000,
     "purchasePrice": 1000,
-    "currentValue": 1010,
-    "yieldPercentage": 1.0,
     "date": "2024-01-20",
     "time": "08:15"
   },
@@ -60,8 +50,6 @@
     "assetId": "A6",
     "amount": 1,
     "purchasePrice": 65000,
-    "currentValue": 78000,
-    "yieldPercentage": 20.0,
     "date": "2024-01-22",
     "time": "16:40"
   },
@@ -71,8 +59,6 @@
     "assetId": "A7",
     "amount": 2,
     "purchasePrice": 6000,
-    "currentValue": 5400,
-    "yieldPercentage": -10.0,
     "date": "2024-01-25",
     "time": "13:10"
   },
@@ -82,8 +68,6 @@
     "assetId": "A8",
     "amount": 5,
     "purchasePrice": 6000,
-    "currentValue": 6060,
-    "yieldPercentage": 1.0,
     "date": "2024-01-28",
     "time": "10:50"
   },
@@ -93,8 +77,6 @@
     "assetId": "A9",
     "amount": 10,
     "purchasePrice": 1800,
-    "currentValue": 1980,
-    "yieldPercentage": 10.0,
     "date": "2024-02-01",
     "time": "12:00"
   },
@@ -104,8 +86,6 @@
     "assetId": "A10",
     "amount": 2,
     "purchasePrice": 6400,
-    "currentValue": 7040,
-    "yieldPercentage": 10.0,
     "date": "2024-02-03",
     "time": "15:30"
   }

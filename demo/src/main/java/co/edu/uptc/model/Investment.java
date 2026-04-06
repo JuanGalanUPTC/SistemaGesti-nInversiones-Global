@@ -8,8 +8,6 @@ public class Investment {
     private String inversionistId;
     private String assetId;
     private double amount;
-    private double currentValue;
-    private double YieldPercentage;
     private double purchasePrice;
     private LocalDate date;
     private LocalTime time;
@@ -18,14 +16,12 @@ public class Investment {
     public Investment() {
     }
 
-    public Investment(String id, String inversionistId, String assetId, double amount, double currentValue,
-            double yieldPercentage, double purchasePrice, LocalDate date, LocalTime time) {
+    public Investment(String id, String inversionistId, String assetId, double amount,
+            double purchasePrice, LocalDate date, LocalTime time) {
         this.id = id;
         this.inversionistId = inversionistId;
         this.assetId = assetId;
         this.amount = amount;
-        this.currentValue = currentValue;
-        YieldPercentage = yieldPercentage;
         this.purchasePrice = purchasePrice;
         this.date = date;
         this.time = time;
@@ -76,27 +72,10 @@ public class Investment {
         this.time = time;
     }
 
-    public double getCurrentValue() {
-        return currentValue;
-    }
-
-    public void setCurrentValue(double currentValue) {
-        this.currentValue = currentValue;
-    }
-
-    public double getYieldPercentage() {
-        return YieldPercentage;
-    }
-
-    public void setYieldPercentage(double yieldPercentage) {
-        YieldPercentage = yieldPercentage;
-    }
-
     @Override
     public String toString() {
         return "Inversion [id=" + id + ", inversionistId=" + inversionistId + ", assetId=" + assetId + ", amount="
-                + amount + ", currentValue=" + currentValue + ", YieldPercentage=" + YieldPercentage
-                + ", purchasePrice=" + purchasePrice + ", date=" + date + ", time=" + time + "]";
+                + amount + ", purchasePrice=" + purchasePrice + ", date=" + date + ", time=" + time + "]";
     }
 
     
