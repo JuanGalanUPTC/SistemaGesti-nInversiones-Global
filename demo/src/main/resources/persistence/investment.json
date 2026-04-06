@@ -1,0 +1,61 @@
+[
+  { "id": "INV1", "inversionistId": "I1", "assetId": "A1", "amount": 5000, "currentValue": 5200, "YieldPercentage": 4.0, "purchasePrice": 1000, "date": "2024-01-10", "time": "10:30:00" },
+  { "id": "INV2", "inversionistId": "I2", "assetId": "A2", "amount": 8000, "currentValue": 7600, "YieldPercentage": -5.0, "purchasePrice": 2500, "date": "2024-01-12", "time": "11:00:00" },
+  { "id": "INV3", "inversionistId": "I3", "assetId": "A3", "amount": 6000, "currentValue": 6300, "YieldPercentage": 5.0, "purchasePrice": 420, "date": "2024-01-15", "time": "09:45:00" },
+  { "id": "INV4", "inversionistId": "I4", "assetId": "A4", "amount": 15000, "currentValue": 15500, "YieldPercentage": 3.3, "purchasePrice": 150000, "date": "2024-01-18", "time": "14:20:00" },
+  { "id": "INV5", "inversionistId": "I5", "assetId": "A5", "amount": 2000, "currentValue": 2020, "YieldPercentage": 1.0, "purchasePrice": 1, "date": "2024-01-20", "time": "08:15:00" },
+
+  { "id": "INV6", "inversionistId": "I6", "assetId": "A6", "amount": 3000, "currentValue": 3600, "YieldPercentage": 20.0, "purchasePrice": 65000, "date": "2024-01-22", "time": "16:40:00" },
+  { "id": "INV7", "inversionistId": "I7", "assetId": "A7", "amount": 1000, "currentValue": 900, "YieldPercentage": -10.0, "purchasePrice": 3000, "date": "2024-01-25", "time": "13:10:00" },
+  { "id": "INV8", "inversionistId": "I8", "assetId": "A8", "amount": 7000, "currentValue": 7100, "YieldPercentage": 1.4, "purchasePrice": 1200, "date": "2024-01-28", "time": "10:50:00" },
+  { "id": "INV9", "inversionistId": "I9", "assetId": "A9", "amount": 9000, "currentValue": 9900, "YieldPercentage": 10.0, "purchasePrice": 180, "date": "2024-02-01", "time": "12:00:00" },
+  { "id": "INV10", "inversionistId": "I10", "assetId": "A10", "amount": 4000, "currentValue": 4400, "YieldPercentage": 10.0, "purchasePrice": 3200, "date": "2024-02-03", "time": "15:30:00" },
+
+  { "id": "INV11", "inversionistId": "I11", "assetId": "A1", "amount": 6000, "currentValue": 6300, "YieldPercentage": 5.0, "purchasePrice": 1000, "date": "2024-02-05", "time": "09:20:00" },
+  { "id": "INV12", "inversionistId": "I12", "assetId": "A2", "amount": 8500, "currentValue": 8000, "YieldPercentage": -5.8, "purchasePrice": 2500, "date": "2024-02-07", "time": "11:45:00" },
+  { "id": "INV13", "inversionistId": "I13", "assetId": "A3", "amount": 3000, "currentValue": 3150, "YieldPercentage": 5.0, "purchasePrice": 420, "date": "2024-02-10", "time": "14:00:00" },
+  { "id": "INV14", "inversionistId": "I14", "assetId": "A4", "amount": 20000, "currentValue": 21000, "YieldPercentage": 5.0, "purchasePrice": 150000, "date": "2024-02-12", "time": "10:10:00" },
+  { "id": "INV15", "inversionistId": "I15", "assetId": "A5", "amount": 2500, "currentValue": 2525, "YieldPercentage": 1.0, "purchasePrice": 1, "date": "2024-02-15", "time": "08:30:00" },
+
+  { "id": "INV16", "inversionistId": "I16", "assetId": "A6", "amount": 3500, "currentValue": 4200, "YieldPercentage": 20.0, "purchasePrice": 65000, "date": "2024-02-18", "time": "16:00:00" },
+  { "id": "INV17", "inversionistId": "I17", "assetId": "A7", "amount": 1200, "currentValue": 1080, "YieldPercentage": -10.0, "purchasePrice": 3000, "date": "2024-02-20", "time": "13:25:00" },
+  { "id": "INV18", "inversionistId": "I18", "assetId": "A8", "amount": 7500, "currentValue": 7600, "YieldPercentage": 1.3, "purchasePrice": 1200, "date": "2024-02-22", "time": "10:40:00" },
+  { "id": "INV19", "inversionistId": "I19", "assetId": "A9", "amount": 9500, "currentValue": 10450, "YieldPercentage": 10.0, "purchasePrice": 180, "date": "2024-02-25", "time": "12:15:00" },
+  { "id": "INV20", "inversionistId": "I20", "assetId": "A10", "amount": 5000, "currentValue": 5500, "YieldPercentage": 10.0, "purchasePrice": 3200, "date": "2024-02-28", "time": "15:10:00" },
+
+  { "id": "INV21", "inversionistId": "I21", "assetId": "A1", "amount": 7000, "currentValue": 7350, "YieldPercentage": 5.0, "purchasePrice": 1000, "date": "2024-03-01", "time": "09:00:00" },
+  { "id": "INV22", "inversionistId": "I22", "assetId": "A2", "amount": 6500, "currentValue": 6200, "YieldPercentage": -4.6, "purchasePrice": 2500, "date": "2024-03-03", "time": "11:10:00" },
+  { "id": "INV23", "inversionistId": "I23", "assetId": "A3", "amount": 4800, "currentValue": 5040, "YieldPercentage": 5.0, "purchasePrice": 420, "date": "2024-03-05", "time": "14:30:00" },
+  { "id": "INV24", "inversionistId": "I24", "assetId": "A4", "amount": 22000, "currentValue": 23100, "YieldPercentage": 5.0, "purchasePrice": 150000, "date": "2024-03-07", "time": "10:20:00" },
+  { "id": "INV25", "inversionistId": "I25", "assetId": "A5", "amount": 3000, "currentValue": 3030, "YieldPercentage": 1.0, "purchasePrice": 1, "date": "2024-03-09", "time": "08:40:00" },
+
+  { "id": "INV26", "inversionistId": "I26", "assetId": "A6", "amount": 4000, "currentValue": 4800, "YieldPercentage": 20.0, "purchasePrice": 65000, "date": "2024-03-11", "time": "16:10:00" },
+  { "id": "INV27", "inversionistId": "I27", "assetId": "A7", "amount": 1500, "currentValue": 1350, "YieldPercentage": -10.0, "purchasePrice": 3000, "date": "2024-03-13", "time": "13:50:00" },
+  { "id": "INV28", "inversionistId": "I28", "assetId": "A8", "amount": 7200, "currentValue": 7300, "YieldPercentage": 1.3, "purchasePrice": 1200, "date": "2024-03-15", "time": "10:30:00" },
+  { "id": "INV29", "inversionistId": "I29", "assetId": "A9", "amount": 8800, "currentValue": 9680, "YieldPercentage": 10.0, "purchasePrice": 180, "date": "2024-03-17", "time": "12:20:00" },
+  { "id": "INV30", "inversionistId": "I30", "assetId": "A10", "amount": 5200, "currentValue": 5720, "YieldPercentage": 10.0, "purchasePrice": 3200, "date": "2024-03-19", "time": "15:00:00" },
+
+  { "id": "INV31", "inversionistId": "I31", "assetId": "A1", "amount": 6100, "currentValue": 6405, "YieldPercentage": 5.0, "purchasePrice": 1000, "date": "2024-03-21", "time": "09:10:00" },
+  { "id": "INV32", "inversionistId": "I32", "assetId": "A2", "amount": 7800, "currentValue": 7410, "YieldPercentage": -5.0, "purchasePrice": 2500, "date": "2024-03-23", "time": "11:25:00" },
+  { "id": "INV33", "inversionistId": "I33", "assetId": "A3", "amount": 5600, "currentValue": 5880, "YieldPercentage": 5.0, "purchasePrice": 420, "date": "2024-03-25", "time": "14:15:00" },
+  { "id": "INV34", "inversionistId": "I34", "assetId": "A4", "amount": 17000, "currentValue": 17850, "YieldPercentage": 5.0, "purchasePrice": 150000, "date": "2024-03-27", "time": "10:45:00" },
+  { "id": "INV35", "inversionistId": "I35", "assetId": "A5", "amount": 2100, "currentValue": 2121, "YieldPercentage": 1.0, "purchasePrice": 1, "date": "2024-03-29", "time": "08:20:00" },
+
+  { "id": "INV36", "inversionistId": "I36", "assetId": "A6", "amount": 3300, "currentValue": 3960, "YieldPercentage": 20.0, "purchasePrice": 65000, "date": "2024-03-31", "time": "16:30:00" },
+  { "id": "INV37", "inversionistId": "I37", "assetId": "A7", "amount": 1100, "currentValue": 990, "YieldPercentage": -10.0, "purchasePrice": 3000, "date": "2024-04-02", "time": "13:05:00" },
+  { "id": "INV38", "inversionistId": "I38", "assetId": "A8", "amount": 6900, "currentValue": 7000, "YieldPercentage": 1.4, "purchasePrice": 1200, "date": "2024-04-04", "time": "10:55:00" },
+  { "id": "INV39", "inversionistId": "I39", "assetId": "A9", "amount": 9700, "currentValue": 10670, "YieldPercentage": 10.0, "purchasePrice": 180, "date": "2024-04-06", "time": "12:35:00" },
+  { "id": "INV40", "inversionistId": "I40", "assetId": "A10", "amount": 4500, "currentValue": 4950, "YieldPercentage": 10.0, "purchasePrice": 3200, "date": "2024-04-08", "time": "15:20:00" },
+
+  { "id": "INV41", "inversionistId": "I41", "assetId": "A1", "amount": 6200, "currentValue": 6510, "YieldPercentage": 5.0, "purchasePrice": 1000, "date": "2024-04-10", "time": "09:35:00" },
+  { "id": "INV42", "inversionistId": "I42", "assetId": "A2", "amount": 8100, "currentValue": 7695, "YieldPercentage": -5.0, "purchasePrice": 2500, "date": "2024-04-12", "time": "11:15:00" },
+  { "id": "INV43", "inversionistId": "I43", "assetId": "A3", "amount": 5400, "currentValue": 5670, "YieldPercentage": 5.0, "purchasePrice": 420, "date": "2024-04-14", "time": "14:05:00" },
+  { "id": "INV44", "inversionistId": "I44", "assetId": "A4", "amount": 19000, "currentValue": 19950, "YieldPercentage": 5.0, "purchasePrice": 150000, "date": "2024-04-16", "time": "10:25:00" },
+  { "id": "INV45", "inversionistId": "I45", "assetId": "A5", "amount": 2600, "currentValue": 2626, "YieldPercentage": 1.0, "purchasePrice": 1, "date": "2024-04-18", "time": "08:50:00" },
+
+  { "id": "INV46", "inversionistId": "I46", "assetId": "A6", "amount": 3700, "currentValue": 4440, "YieldPercentage": 20.0, "purchasePrice": 65000, "date": "2024-04-20", "time": "16:45:00" },
+  { "id": "INV47", "inversionistId": "I47", "assetId": "A7", "amount": 1300, "currentValue": 1170, "YieldPercentage": -10.0, "purchasePrice": 3000, "date": "2024-04-22", "time": "13:40:00" },
+  { "id": "INV48", "inversionistId": "I48", "assetId": "A8", "amount": 7100, "currentValue": 7200, "YieldPercentage": 1.4, "purchasePrice": 1200, "date": "2024-04-24", "time": "10:35:00" },
+  { "id": "INV49", "inversionistId": "I49", "assetId": "A9", "amount": 9200, "currentValue": 10120, "YieldPercentage": 10.0, "purchasePrice": 180, "date": "2024-04-26", "time": "12:45:00" },
+  { "id": "INV50", "inversionistId": "I50", "assetId": "A10", "amount": 4800, "currentValue": 5280, "YieldPercentage": 10.0, "purchasePrice": 3200, "date": "2024-04-28", "time": "15:05:00" }
+]

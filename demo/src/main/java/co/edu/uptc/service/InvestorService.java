@@ -22,7 +22,7 @@ public class InvestorService {
 
     public InvestorService() {
         Type type = new TypeToken<List<Investor>>() {}.getType();
-        this.repo = new JsonRepository<>("demo\\src\\main\\resources\\investors.json\\", type);
+        this.repo = new JsonRepository<>("demo\\src\\main\\resources\\investor.json\\", type);
     }
 
     public InvestorService(JsonRepository<Investor> repo) {

@@ -1,5 +1,0 @@
-[
-  { "id": "AST001", "name": "Bitcoin", "type": "CRYPTO", "price": 30000 },
-  { "id": "AST002", "name": "Apple", "type": "STOCK", "price": 150 },
-  { "id": "AST003", "name": "Gold", "type": "COMMODITY", "price": 1800 }
-]

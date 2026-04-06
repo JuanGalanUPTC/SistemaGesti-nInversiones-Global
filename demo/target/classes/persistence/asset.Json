@@ -1,0 +1,72 @@
+[
+  {
+    "id": "A1",
+    "name": "Bono del Estado 2030",
+    "assetType": "BOND",
+    "actualPrice": 1000.0,
+    "volatility": 0.02
+  },
+  {
+    "id": "A2",
+    "name": "Acciones Ecopetrol",
+    "assetType": "STOCK",
+    "actualPrice": 2500.5,
+    "volatility": 0.15
+  },
+  {
+    "id": "A3",
+    "name": "ETF S&P 500",
+    "assetType": "ETF",
+    "actualPrice": 420.75,
+    "volatility": 0.10
+  },
+  {
+    "id": "A4",
+    "name": "Apartamento en Bogotá",
+    "assetType": "PROPERTY",
+    "actualPrice": 150000.0,
+    "volatility": 0.05
+  },
+  {
+    "id": "A5",
+    "name": "USD",
+    "assetType": "BADGE",
+    "actualPrice": 1.0,
+    "volatility": 0.01
+  },
+  {
+    "id": "A6",
+    "name": "Bitcoin",
+    "assetType": "CRYPTO",
+    "actualPrice": 65000.0,
+    "volatility": 0.35
+  },
+  {
+    "id": "A7",
+    "name": "NFT Arte Digital #1",
+    "assetType": "NFT",
+    "actualPrice": 3000.0,
+    "volatility": 0.50
+  },
+  {
+    "id": "A8",
+    "name": "Bono Corporativo Bancolombia",
+    "assetType": "BOND",
+    "actualPrice": 1200.0,
+    "volatility": 0.03
+  },
+  {
+    "id": "A9",
+    "name": "Acciones Apple",
+    "assetType": "STOCK",
+    "actualPrice": 180.25,
+    "volatility": 0.12
+  },
+  {
+    "id": "A10",
+    "name": "Ethereum",
+    "assetType": "CRYPTO",
+    "actualPrice": 3200.0,
+    "volatility": 0.30
+  }
+]
