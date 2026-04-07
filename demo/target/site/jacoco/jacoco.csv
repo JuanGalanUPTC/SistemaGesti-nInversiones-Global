@@ -16,11 +16,11 @@ demo,co.edu.uptc.model.enums,RiskProfile,0,48,0,0,0,8,0,3,0,3
 demo,co.edu.uptc.repository,JsonRepository,41,110,3,1,14,30,4,10,2,10
 demo,co.edu.uptc.view,ConsoleView,291,0,4,0,73,0,18,0,16,0
 demo,co.edu.uptc.view,Main,15,0,0,0,5,0,2,0,2,0
-demo,co.edu.uptc.control,InvestmentController,393,0,18,0,101,0,15,0,6,0
+demo,co.edu.uptc.control,InvestmentController,422,0,18,0,108,0,15,0,6,0
 demo,co.edu.uptc.control,PortfolioController,561,0,14,0,107,0,15,0,8,0
 demo,co.edu.uptc.control,AssetController,390,0,20,0,91,0,19,0,6,0
-demo,co.edu.uptc.control,MenuController,524,0,64,0,151,0,55,0,10,0
-demo,co.edu.uptc.control,InvestorController,417,0,16,0,101,0,16,0,7,0
+demo,co.edu.uptc.control,MenuController,520,0,63,0,150,0,54,0,10,0
+demo,co.edu.uptc.control,InvestorController,318,0,12,0,78,0,13,0,6,0
 demo,co.edu.uptc.model,Investment,49,45,0,0,17,17,9,8,9,8
 demo,co.edu.uptc.model,Investor,20,62,0,0,4,26,2,13,2,13
 demo,co.edu.uptc.model,Asset,32,37,0,0,11,15,6,7,6,7

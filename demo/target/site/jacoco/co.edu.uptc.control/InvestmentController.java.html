@@ -129,50 +129,57 @@ public class InvestmentController {
 <span class="nc" id="L129">                view.showMessageByKey(&quot;msg.error.noInvestmentsForInvestor&quot;);</span>
 <span class="nc" id="L130">            } else {</span>
 <span class="nc" id="L131">                double totalPortfolioValue = 0.0;</span>
+<span class="nc" id="L132">                double totalInitialInvested = 0.0;</span>
     
-<span class="nc bnc" id="L133" title="All 2 branches missed.">                for (Investment inv : portfolio) {</span>
-<span class="nc" id="L134">                    double currentPrice = assetService.getPrice(inv.getAssetId());</span>
-<span class="nc" id="L135">                    double currentValue = currentPrice * inv.getAmount();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                for (Investment inv : portfolio) {</span>
+<span class="nc" id="L135">                    double currentPrice = assetService.getPrice(inv.getAssetId());</span>
+<span class="nc" id="L136">                    double currentValue = currentPrice * inv.getAmount();</span>
 
-<span class="nc" id="L137">                    printInvestmentDetails(inv);</span>
-<span class="nc" id="L138">                    totalPortfolioValue += currentValue;</span>
+<span class="nc" id="L138">                    printInvestmentDetails(inv);</span>
+<span class="nc" id="L139">                    totalPortfolioValue += currentValue;</span>
+<span class="nc" id="L140">                    totalInitialInvested += inv.getPurchasePrice();</span>
                 }
     
-<span class="nc" id="L141">                String totalMsg = String.format(</span>
-<span class="nc" id="L142">                    view.getLocalizedText(&quot;msg.info.totalPortfolioValue&quot;),</span>
-<span class="nc" id="L143">                    totalPortfolioValue</span>
+<span class="nc" id="L143">                String totalMsg = String.format(</span>
+<span class="nc" id="L144">                    view.getLocalizedText(&quot;msg.info.totalPortfolioValue&quot;),</span>
+<span class="nc" id="L145">                    totalPortfolioValue</span>
                 );
-<span class="nc" id="L145">                view.printText(totalMsg);</span>
+<span class="nc" id="L147">                view.printText(totalMsg);</span>
+<span class="nc" id="L148">                String totalInitialMsg = String.format(</span>
+<span class="nc" id="L149">                    view.getLocalizedText(&quot;msg.info.totalPortfolioInitialValue&quot;),</span>
+<span class="nc" id="L150">                    totalInitialInvested</span>
+                );
+<span class="nc" id="L152">                view.printText(totalInitialMsg);</span>
             }
     
-<span class="nc" id="L148">        } catch (OperationCancelledException e) {</span>
-<span class="nc" id="L149">            view.printText(e.getMessage());</span>
-<span class="nc" id="L150">        } catch (RuntimeException e) {</span>
-<span class="nc" id="L151">            view.showMessageByKey(&quot;msg.error.system&quot;);</span>
-<span class="nc" id="L152">            view.printText(e.getMessage());</span>
+<span class="nc" id="L155">        } catch (OperationCancelledException e) {</span>
+<span class="nc" id="L156">            view.printText(e.getMessage());</span>
+<span class="nc" id="L157">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L158">            view.showMessageByKey(&quot;msg.error.system&quot;);</span>
+<span class="nc" id="L159">            view.printText(e.getMessage());</span>
         }
-<span class="nc" id="L154">    }</span>
+<span class="nc" id="L161">    }</span>
 
     /**
      * Actualiza el precio de un activo y detona el recálculo masivo en cascada.
      */
     public void handleUpdateAssetPriceAndRecalculate() {
         try {
-<span class="nc" id="L161">            view.showMessageByKey(&quot;msg.title.updateMarketPrice&quot;);</span>
+<span class="nc" id="L168">            view.showMessageByKey(&quot;msg.title.updateMarketPrice&quot;);</span>
             
-<span class="nc" id="L163">            String assetId = view.readStringInput(&quot;msg.input.assetId&quot;);</span>
-<span class="nc" id="L164">            double newPrice = view.readDoubleInput(&quot;msg.input.newPrice&quot;);</span>
+<span class="nc" id="L170">            String assetId = view.readStringInput(&quot;msg.input.assetId&quot;);</span>
+<span class="nc" id="L171">            double newPrice = view.readDoubleInput(&quot;msg.input.newPrice&quot;);</span>
 
-<span class="nc" id="L166">            investmentService.updateAssetPriceProcces(assetId, newPrice);</span>
+<span class="nc" id="L173">            investmentService.updateAssetPriceProcces(assetId, newPrice);</span>
             
-<span class="nc" id="L168">            view.showMessageByKey(&quot;msg.success.marketUpdated&quot;);</span>
+<span class="nc" id="L175">            view.showMessageByKey(&quot;msg.success.marketUpdated&quot;);</span>
 
-<span class="nc" id="L170">        } catch (OperationCancelledException e) {</span>
-<span class="nc" id="L171">            view.printText(e.getMessage());</span>
-<span class="nc" id="L172">        } catch (RuntimeException e) {</span>
-<span class="nc" id="L173">            view.printText(&quot;Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L177">        } catch (OperationCancelledException e) {</span>
+<span class="nc" id="L178">            view.printText(e.getMessage());</span>
+<span class="nc" id="L179">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L180">            view.printText(&quot;Error: &quot; + e.getMessage());</span>
         }
-<span class="nc" id="L175">    }</span>
+<span class="nc" id="L182">    }</span>
 
     /**
      * Método auxiliar privado para imprimir los detalles de una inversión.
@@ -180,32 +187,33 @@ public class InvestmentController {
     private void printInvestmentDetails(Investment inv) {
 
         // 🔹 Calcular métricas derivadas de forma dinámica en tiempo real
-<span class="nc" id="L183">        double currentValue = investmentService.calculateCurrentValue(inv);</span>
+<span class="nc" id="L190">        double currentValue = investmentService.calculateCurrentValue(inv);</span>
     
         // 🔹 Inversión inicial (ya viene calculada correctamente)
-<span class="nc" id="L186">        double initialInvestment = inv.getPurchasePrice();</span>
+<span class="nc" id="L193">        double initialInvestment = inv.getPurchasePrice();</span>
     
         // 🔹 Ganancia/pérdida
-<span class="nc" id="L189">        double earnings = currentValue - initialInvestment;</span>
+<span class="nc" id="L196">        double earnings = currentValue - initialInvestment;</span>
     
         // 🔹 Rendimiento %
-<span class="nc" id="L192">        double yield = investmentService.calculateYieldPercentage(inv);</span>
+<span class="nc" id="L199">        double yield = investmentService.calculateYieldPercentage(inv);</span>
     
-<span class="nc bnc" id="L194" title="All 2 branches missed.">        String earningsStr = (earnings &gt;= 0)</span>
-<span class="nc" id="L195">            ? &quot;(+$&quot; + String.format(&quot;%.2f&quot;, earnings) + &quot;)&quot;</span>
-<span class="nc" id="L196">            : &quot;(-$&quot; + String.format(&quot;%.2f&quot;, Math.abs(earnings)) + &quot;)&quot;;</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        String earningsStr = (earnings &gt;= 0)</span>
+<span class="nc" id="L202">            ? &quot;(+$&quot; + String.format(&quot;%.2f&quot;, earnings) + &quot;)&quot;</span>
+<span class="nc" id="L203">            : &quot;(-$&quot; + String.format(&quot;%.2f&quot;, Math.abs(earnings)) + &quot;)&quot;;</span>
     
-<span class="nc" id="L198">        String detailLine = String.format(</span>
-<span class="nc" id="L199">            view.getLocalizedText(&quot;msg.format.investmentDetail&quot;),</span>
-<span class="nc" id="L200">            inv.getId(),</span>
-<span class="nc" id="L201">            inv.getAssetId(),</span>
-<span class="nc" id="L202">            inv.getAmount(),</span>
-<span class="nc" id="L203">            currentValue,</span>
-<span class="nc" id="L204">            yield,</span>
-<span class="nc" id="L205">            earningsStr</span>
+<span class="nc" id="L205">        String detailLine = String.format(</span>
+<span class="nc" id="L206">            view.getLocalizedText(&quot;msg.format.investmentDetail&quot;),</span>
+<span class="nc" id="L207">            inv.getId(),</span>
+<span class="nc" id="L208">            inv.getAssetId(),</span>
+<span class="nc" id="L209">            inv.getAmount(),</span>
+<span class="nc" id="L210">            initialInvestment,</span>
+<span class="nc" id="L211">            currentValue,</span>
+<span class="nc" id="L212">            yield,</span>
+<span class="nc" id="L213">            earningsStr</span>
         );
     
-<span class="nc" id="L208">        view.printText(detailLine);</span>
-<span class="nc" id="L209">    }</span>
+<span class="nc" id="L216">        view.printText(detailLine);</span>
+<span class="nc" id="L217">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
