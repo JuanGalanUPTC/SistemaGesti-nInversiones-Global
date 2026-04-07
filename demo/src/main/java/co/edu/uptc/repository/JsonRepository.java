@@ -53,7 +53,7 @@ public class JsonRepository<T> implements Repository<T> {
             e.printStackTrace();
             return new ArrayList<>();
         } catch (JsonSyntaxException e) {
-            System.out.println("JSON corrupto, reiniciando archivo...");
+
             return new ArrayList<>();
         }
     }
