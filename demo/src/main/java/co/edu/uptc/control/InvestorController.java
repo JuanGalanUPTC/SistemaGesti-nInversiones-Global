@@ -138,6 +138,7 @@ public void handleCreateInvestor() {
             String newName = view.readStringInput("msg.input.newName");
             String newEmail = view.readStringInput("msg.input.newEmail");
             String newRiskProfile = view.readStringInput("msg.input.newRiskProfile").trim().toUpperCase();
+            
     
     RiskProfile riskProfile;
 
@@ -165,7 +166,7 @@ public void handleCreateInvestor() {
     }
 
 
-            investorService.updateInvestorAtributes(id, newName, newEmail, newRiskProfile);
+            investorService.updateInvestorAtributes(id, newName, newEmail, riskProfile);
             view.showMessageByKey("msg.success.investorUpdated");
 
         } catch (InvestorNotFoundException | IllegalArgumentException e) {

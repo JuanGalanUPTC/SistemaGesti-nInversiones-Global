@@ -108,7 +108,7 @@ public class InvestorService {
         }
     }
 
-    public void updateInvestorAtributes(String id, String newName, String newEmail, String newRiskProfile) {
+    public void updateInvestorAtributes(String id, String newName, String newEmail, RiskProfile newRiskProfile) {
         List<Investor> investors = repo.findAll();
         boolean isUpdated = false;
     
@@ -122,18 +122,7 @@ public class InvestorService {
                 if (newEmail != null && !newEmail.trim().isEmpty()) {
                     investor.setEmail(newEmail);
                 }
-    
-                // Conversión del String al Enum
-                if (newRiskProfile != null && !newRiskProfile.trim().isEmpty()) {
-                    try {
-                        RiskProfile parsedRisk = RiskProfile.valueOf(newRiskProfile.trim().toUpperCase());
-                        investor.setRiskProfile(parsedRisk);
-                    } catch (IllegalArgumentException e) {
-                        throw new IllegalArgumentException(
-                            "Error: El perfil de riesgo '" + newRiskProfile + "' no es válido."
-                        );
-                    }
-                }
+                        investor.setRiskProfile(newRiskProfile);
     
                 isUpdated = true;
                 break;
