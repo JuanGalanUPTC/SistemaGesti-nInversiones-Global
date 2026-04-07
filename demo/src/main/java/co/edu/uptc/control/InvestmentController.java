@@ -129,6 +129,7 @@ public class InvestmentController {
                 view.showMessageByKey("msg.error.noInvestmentsForInvestor");
             } else {
                 double totalPortfolioValue = 0.0;
+                double totalInitialInvested = 0.0;
     
                 for (Investment inv : portfolio) {
                     double currentPrice = assetService.getPrice(inv.getAssetId());
@@ -136,6 +137,7 @@ public class InvestmentController {
 
                     printInvestmentDetails(inv);
                     totalPortfolioValue += currentValue;
+                    totalInitialInvested += inv.getPurchasePrice();
                 }
     
                 String totalMsg = String.format(
@@ -143,6 +145,11 @@ public class InvestmentController {
                     totalPortfolioValue
                 );
                 view.printText(totalMsg);
+                String totalInitialMsg = String.format(
+                    view.getLocalizedText("msg.info.totalPortfolioInitialValue"),
+                    totalInitialInvested
+                );
+                view.printText(totalInitialMsg);
             }
     
         } catch (OperationCancelledException e) {
@@ -200,6 +207,7 @@ public class InvestmentController {
             inv.getId(),
             inv.getAssetId(),
             inv.getAmount(),
+            initialInvestment,
             currentValue,
             yield,
             earningsStr

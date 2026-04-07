@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: co.edu.uptc.service.InvestmentServiceTest
 -------------------------------------------------------------------------------
-Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.156 s -- in co.edu.uptc.service.InvestmentServiceTest
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.564 s -- in co.edu.uptc.service.InvestmentServiceTest

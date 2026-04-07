@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="co.edu.uptc.service.PortfolioServiceTest" time="0.139" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="co.edu.uptc.service.PortfolioServiceTest" time="0.172" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\test-classes;C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\classes;C:\Users\haxel\.m2\repository\com\google\code\gson\gson\2.13.1\gson-2.13.1.jar;C:\Users\haxel\.m2\repository\com\google\errorprone\error_prone_annotations\2.38.0\error_prone_annotations-2.38.0.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\haxel\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\haxel\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\haxel\.m2\repository\org\mockito\mockito-junit-jupiter\5.14.2\mockito-junit-jupiter-5.14.2.jar;C:\Users\haxel\.m2\repository\org\mockito\mockito-core\5.14.2\mockito-core-5.14.2.jar;C:\Users\haxel\.m2\repository\net\bytebuddy\byte-buddy\1.15.4\byte-buddy-1.15.4.jar;C:\Users\haxel\.m2\repository\net\bytebuddy\byte-buddy-agent\1.15.4\byte-buddy-agent-1.15.4.jar;C:\Users\haxel\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;"/>
+    <property name="java.class.path" value="C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\test-classes;C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\classes;C:\Users\haxel\.m2\repository\com\google\code\gson\gson\2.13.1\gson-2.13.1.jar;C:\Users\haxel\.m2\repository\com\google\errorprone\error_prone_annotations\2.38.0\error_prone_annotations-2.38.0.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\haxel\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\haxel\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;"/>
     <property name="java.vm.vendor" value="Eclipse Adoptium"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -16,9 +16,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="ES"/>
     <property name="sun.boot.library.path" value="C:\Users\haxel\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.2.10-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\haxel\AppData\Local\Temp\surefire8872515955434773080\surefirebooter-20260406200108078_3.jar C:\Users\haxel\AppData\Local\Temp\surefire8872515955434773080 2026-04-06T20-01-07_843-jvmRun1 surefire-20260406200108078_1tmp surefire_0-20260406200108078_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\haxel\AppData\Local\Temp\surefire11963523125536336937\surefirebooter-20260406205315466_3.jar C:\Users\haxel\AppData\Local\Temp\surefire11963523125536336937 2026-04-06T20-53-14_464-jvmRun1 surefire-20260406205315466_1tmp surefire_0-20260406205315466_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\test-classes;C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\classes;C:\Users\haxel\.m2\repository\com\google\code\gson\gson\2.13.1\gson-2.13.1.jar;C:\Users\haxel\.m2\repository\com\google\errorprone\error_prone_annotations\2.38.0\error_prone_annotations-2.38.0.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\haxel\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\haxel\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\haxel\.m2\repository\org\mockito\mockito-junit-jupiter\5.14.2\mockito-junit-jupiter-5.14.2.jar;C:\Users\haxel\.m2\repository\org\mockito\mockito-core\5.14.2\mockito-core-5.14.2.jar;C:\Users\haxel\.m2\repository\net\bytebuddy\byte-buddy\1.15.4\byte-buddy-1.15.4.jar;C:\Users\haxel\.m2\repository\net\bytebuddy\byte-buddy-agent\1.15.4\byte-buddy-agent-1.15.4.jar;C:\Users\haxel\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\test-classes;C:\Users\haxel\Desktop\Sistema de Gestión de Inversiones Global\demo\target\classes;C:\Users\haxel\.m2\repository\com\google\code\gson\gson\2.13.1\gson-2.13.1.jar;C:\Users\haxel\.m2\repository\com\google\errorprone\error_prone_annotations\2.38.0\error_prone_annotations-2.38.0.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\haxel\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\haxel\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\haxel\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\haxel"/>
     <property name="user.language" value="es"/>
@@ -31,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\haxel\AppData\Local\Temp\surefire8872515955434773080\surefirebooter-20260406200108078_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\haxel\AppData\Local\Temp\surefire11963523125536336937\surefirebooter-20260406205315466_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25.0.2+10-LTS"/>
@@ -61,13 +61,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="getTop5InvestorsByYield_ordersDescending" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.05"/>
-  <testcase name="calculateTotalInvested_emptyPortfolio_returnsZero" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.007"/>
-  <testcase name="calculateCurrentPortfolioValue_usesAssetPrices" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.006"/>
-  <testcase name="calculateEarningsByPeriod_sumsOnlyInversionsInRange" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.006"/>
-  <testcase name="calculateTotalInvested_sumsPurchasePrices" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.009"/>
-  <testcase name="calculatePortfolioRisk_weightedByValueAndVolatility" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.019"/>
-  <testcase name="calculateEarningsByPeriod_returnsZeroWhenNoMatches" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.007"/>
-  <testcase name="calculateEarningsByPeriod_throwsWhenStartAfterEnd" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.01"/>
-  <testcase name="calculateYieldPercentage_reflectsGain" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.013"/>
+  <testcase name="getTop5InvestorsByYield_ordersDescending" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.106"/>
+  <testcase name="calculateTotalInvested_emptyPortfolio_returnsZero" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.006"/>
+  <testcase name="calculateCurrentPortfolioValue_usesAssetPrices" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.007"/>
+  <testcase name="calculateEarningsByPeriod_sumsOnlyInversionsInRange" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.007"/>
+  <testcase name="calculateTotalInvested_sumsPurchasePrices" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.006"/>
+  <testcase name="calculatePortfolioRisk_weightedByValueAndVolatility" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.008"/>
+  <testcase name="calculateEarningsByPeriod_returnsZeroWhenNoMatches" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.006"/>
+  <testcase name="calculateEarningsByPeriod_throwsWhenStartAfterEnd" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.008"/>
+  <testcase name="calculateYieldPercentage_reflectsGain" classname="co.edu.uptc.service.PortfolioServiceTest" time="0.006"/>
 </testsuite>
