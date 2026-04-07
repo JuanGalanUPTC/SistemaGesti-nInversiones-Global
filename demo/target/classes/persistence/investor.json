@@ -407,6 +407,9 @@
     "email": "juandavid@gmail.com",
     "availableCapital": 1952000.0,
     "riskProfile": "CONSERVATIVE",
+<<<<<<< HEAD
+    "investments": []
+=======
     "investments": [
       {
         "id": "A1",
@@ -418,5 +421,6 @@
         "time": "19:08:02.339367200"
       }
     ]
+>>>>>>> 04c0229d1015968473ae82ca354df97390355813
   }
 ]
