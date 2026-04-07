@@ -186,34 +186,44 @@ public class InvestmentController {
      */
     private void printInvestmentDetails(Investment inv) {
 
-        // 🔹 Calcular métricas derivadas de forma dinámica en tiempo real
-<span class="nc" id="L190">        double currentValue = investmentService.calculateCurrentValue(inv);</span>
-    
-        // 🔹 Inversión inicial (ya viene calculada correctamente)
-<span class="nc" id="L193">        double initialInvestment = inv.getPurchasePrice();</span>
-    
-        // 🔹 Ganancia/pérdida
-<span class="nc" id="L196">        double earnings = currentValue - initialInvestment;</span>
-    
-        // 🔹 Rendimiento %
-<span class="nc" id="L199">        double yield = investmentService.calculateYieldPercentage(inv);</span>
-    
-<span class="nc bnc" id="L201" title="All 2 branches missed.">        String earningsStr = (earnings &gt;= 0)</span>
-<span class="nc" id="L202">            ? &quot;(+$&quot; + String.format(&quot;%.2f&quot;, earnings) + &quot;)&quot;</span>
-<span class="nc" id="L203">            : &quot;(-$&quot; + String.format(&quot;%.2f&quot;, Math.abs(earnings)) + &quot;)&quot;;</span>
-    
-<span class="nc" id="L205">        String detailLine = String.format(</span>
-<span class="nc" id="L206">            view.getLocalizedText(&quot;msg.format.investmentDetail&quot;),</span>
-<span class="nc" id="L207">            inv.getId(),</span>
-<span class="nc" id="L208">            inv.getAssetId(),</span>
-<span class="nc" id="L209">            inv.getAmount(),</span>
-<span class="nc" id="L210">            initialInvestment,</span>
-<span class="nc" id="L211">            currentValue,</span>
-<span class="nc" id="L212">            yield,</span>
-<span class="nc" id="L213">            earningsStr</span>
-        );
-    
-<span class="nc" id="L216">        view.printText(detailLine);</span>
-<span class="nc" id="L217">    }</span>
+<span class="nc" id="L189">        double currentValue = investmentService.calculateCurrentValue(inv);</span>
+<span class="nc" id="L190">        double initialInvestment = inv.getPurchasePrice();</span>
+<span class="nc" id="L191">        double earnings = currentValue - initialInvestment;</span>
+<span class="nc" id="L192">        double yield = investmentService.calculateYieldPercentage(inv);</span>
+
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        double unitInitial = inv.getAmount() != 0 ? initialInvestment / inv.getAmount() : 0.0;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        double unitCurrent = inv.getAmount() != 0 ? currentValue / inv.getAmount() : 0.0;</span>
+
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        String earningsStr = (earnings &gt;= 0)</span>
+<span class="nc" id="L198">            ? &quot;(+$&quot; + String.format(&quot;%.2f&quot;, earnings) + &quot;)&quot;</span>
+<span class="nc" id="L199">            : &quot;(-$&quot; + String.format(&quot;%.2f&quot;, Math.abs(earnings)) + &quot;)&quot;;</span>
+
+        // Encabezado con ID + nombre del activo (si existe)
+        String assetLabel;
+<span class="nc" id="L203">        Asset asset = assetService.findById(inv.getAssetId());</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        if (asset != null) {</span>
+<span class="nc" id="L205">            assetLabel = String.format(&quot;%s (%s)&quot;, asset.getName(), asset.getAssetType());</span>
+<span class="nc" id="L206">        } else {</span>
+<span class="nc" id="L207">            assetLabel = inv.getAssetId();</span>
+        }
+
+<span class="nc" id="L210">        String header = String.format(&quot;[%s] %s&quot;, inv.getId(), assetLabel);</span>
+<span class="nc" id="L211">        view.printText(header);</span>
+
+        // Líneas en columnas con etiquetas i18n
+<span class="nc" id="L214">        String qtyLabel = view.getLocalizedText(&quot;msg.label.quantity&quot;) + &quot;:&quot;;</span>
+<span class="nc" id="L215">        String initInvLabel = view.getLocalizedText(&quot;msg.label.initialInvestment&quot;) + &quot;:&quot;;</span>
+<span class="nc" id="L216">        String currValLabel = view.getLocalizedText(&quot;msg.label.currentValue&quot;) + &quot;:&quot;;</span>
+<span class="nc" id="L217">        String unitCurrLabel = view.getLocalizedText(&quot;msg.label.currentUnitValue&quot;) + &quot;:&quot;;</span>
+<span class="nc" id="L218">        String unitInitLabel = view.getLocalizedText(&quot;msg.label.initialUnitValue&quot;) + &quot;:&quot;;</span>
+<span class="nc" id="L219">        String yieldLabel = view.getLocalizedText(&quot;msg.label.yield&quot;) + &quot;:&quot;;</span>
+
+<span class="nc" id="L221">        view.printText(String.format(&quot;  %-24s %,.2f&quot;, qtyLabel, inv.getAmount()));</span>
+<span class="nc" id="L222">        view.printText(String.format(&quot;  %-24s $%,.2f&quot;, initInvLabel, initialInvestment));</span>
+<span class="nc" id="L223">        view.printText(String.format(&quot;  %-24s $%,.2f&quot;, currValLabel, currentValue));</span>
+<span class="nc" id="L224">        view.printText(String.format(&quot;  %-24s $%,.2f&quot;, unitCurrLabel, unitCurrent));</span>
+<span class="nc" id="L225">        view.printText(String.format(&quot;  %-24s $%,.2f&quot;, unitInitLabel, unitInitial));</span>
+<span class="nc" id="L226">        view.printText(String.format(&quot;  %-24s %.2f%% %s&quot;, yieldLabel, yield, earningsStr));</span>
+<span class="nc" id="L227">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

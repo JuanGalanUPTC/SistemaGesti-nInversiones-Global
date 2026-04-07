@@ -5,14 +5,17 @@
     "email": "investor1@email.com",
     "availableCapital": 10000.0,
     "riskProfile": "CONSERVATIVE",
-    "investments": [{
-      "id": "INV1",
-      "inversionistId": "I1",
-      "assetId": "A1",
-      "amount": 5,
-      "purchasePrice": 5000,
-      "date": "2024-01-10",
-      "time": "10:30"}]
+    "investments": [
+      {
+        "id": "INV1",
+        "inversionistId": "I1",
+        "assetId": "A1",
+        "amount": 5.0,
+        "purchasePrice": 5000.0,
+        "date": "2024-01-10",
+        "time": "10:30"
+      }
+    ]
   },
   {
     "id": "I2",
@@ -20,14 +23,17 @@
     "email": "investor2@email.com",
     "availableCapital": 15000.0,
     "riskProfile": "MODERATE",
-    "investments": [{
-      "id": "INV2",
-      "inversionistId": "I2",
-      "assetId": "A2",
-      "amount": 3,
-      "purchasePrice": 7500,
-      "date": "2024-01-12",
-      "time": "11:00"}]
+    "investments": [
+      {
+        "id": "INV2",
+        "inversionistId": "I2",
+        "assetId": "A2",
+        "amount": 3.0,
+        "purchasePrice": 7500.0,
+        "date": "2024-01-12",
+        "time": "11:00"
+      }
+    ]
   },
   {
     "id": "I3",
@@ -35,14 +41,17 @@
     "email": "investor3@email.com",
     "availableCapital": 20000.0,
     "riskProfile": "AGGRESSIVE",
-    "investments": [{
-      "id": "INV3",
-      "inversionistId": "I3",
-      "assetId": "A3",
-      "amount": 10,
-      "purchasePrice": 4200,
-      "date": "2024-01-15",
-      "time": "09:45"}]
+    "investments": [
+      {
+        "id": "INV3",
+        "inversionistId": "I3",
+        "assetId": "A3",
+        "amount": 10.0,
+        "purchasePrice": 4200.0,
+        "date": "2024-01-15",
+        "time": "09:45"
+      }
+    ]
   },
   {
     "id": "I4",
@@ -50,14 +59,17 @@
     "email": "investor4@email.com",
     "availableCapital": 12000.0,
     "riskProfile": "CONSERVATIVE",
-    "investments": [  {
-      "id": "INV4",
-      "inversionistId": "I4",
-      "assetId": "A4",
-      "amount": 1,
-      "purchasePrice": 150000,
-      "date": "2024-01-18",
-      "time": "14:20"}]
+    "investments": [
+      {
+        "id": "INV4",
+        "inversionistId": "I4",
+        "assetId": "A4",
+        "amount": 1.0,
+        "purchasePrice": 150000.0,
+        "date": "2024-01-18",
+        "time": "14:20"
+      }
+    ]
   },
   {
     "id": "I5",
@@ -65,14 +77,17 @@
     "email": "investor5@email.com",
     "availableCapital": 18000.0,
     "riskProfile": "MODERATE",
-    "investments": [{
-      "id": "INV5",
-      "inversionistId": "I5",
-      "assetId": "A5",
-      "amount": 1000,
-      "purchasePrice": 1000,
-      "date": "2024-01-20",
-      "time": "08:15"}]
+    "investments": [
+      {
+        "id": "INV5",
+        "inversionistId": "I5",
+        "assetId": "A5",
+        "amount": 1000.0,
+        "purchasePrice": 1000.0,
+        "date": "2024-01-20",
+        "time": "08:15"
+      }
+    ]
   },
   {
     "id": "I6",
@@ -80,14 +95,17 @@
     "email": "investor6@email.com",
     "availableCapital": 25000.0,
     "riskProfile": "AGGRESSIVE",
-    "investments": [ {
-      "id": "INV6",
-      "inversionistId": "I6",
-      "assetId": "A6",
-      "amount": 1,
-      "purchasePrice": 65000,
-      "date": "2024-01-22",
-      "time": "16:40"}]
+    "investments": [
+      {
+        "id": "INV6",
+        "inversionistId": "I6",
+        "assetId": "A6",
+        "amount": 1.0,
+        "purchasePrice": 65000.0,
+        "date": "2024-01-22",
+        "time": "16:40"
+      }
+    ]
   },
   {
     "id": "I7",
@@ -95,14 +113,17 @@
     "email": "investor7@email.com",
     "availableCapital": 9000.0,
     "riskProfile": "CONSERVATIVE",
-    "investments": [{
-      "id": "INV7",
-      "inversionistId": "I7",
-      "assetId": "A7",
-      "amount": 2,
-      "purchasePrice": 6000,
-      "date": "2024-01-25",
-      "time": "13:10"}]
+    "investments": [
+      {
+        "id": "INV7",
+        "inversionistId": "I7",
+        "assetId": "A7",
+        "amount": 2.0,
+        "purchasePrice": 6000.0,
+        "date": "2024-01-25",
+        "time": "13:10"
+      }
+    ]
   },
   {
     "id": "I8",
@@ -110,14 +131,17 @@
     "email": "investor8@email.com",
     "availableCapital": 22000.0,
     "riskProfile": "MODERATE",
-    "investments": [{
-      "id": "INV8",
-      "inversionistId": "I8",
-      "assetId": "A8",
-      "amount": 5,
-      "purchasePrice": 6000,
-      "date": "2024-01-28",
-      "time": "10:50"}]
+    "investments": [
+      {
+        "id": "INV8",
+        "inversionistId": "I8",
+        "assetId": "A8",
+        "amount": 5.0,
+        "purchasePrice": 6000.0,
+        "date": "2024-01-28",
+        "time": "10:50"
+      }
+    ]
   },
   {
     "id": "I9",
@@ -125,14 +149,17 @@
     "email": "investor9@email.com",
     "availableCapital": 30000.0,
     "riskProfile": "AGGRESSIVE",
-    "investments": [{
-      "id": "INV9",
-      "inversionistId": "I9",
-      "assetId": "A9",
-      "amount": 10,
-      "purchasePrice": 1800,
-      "date": "2024-02-01",
-      "time": "12:00"}]
+    "investments": [
+      {
+        "id": "INV9",
+        "inversionistId": "I9",
+        "assetId": "A9",
+        "amount": 10.0,
+        "purchasePrice": 1800.0,
+        "date": "2024-02-01",
+        "time": "12:00"
+      }
+    ]
   },
   {
     "id": "I10",
@@ -140,20 +167,23 @@
     "email": "investor10@email.com",
     "availableCapital": 11000.0,
     "riskProfile": "CONSERVATIVE",
-    "investments": [ {
-      "id": "INV10",
-      "inversionistId": "I10",
-      "assetId": "A10",
-      "amount": 2,
-      "purchasePrice": 6400,
-      "date": "2024-02-03",
-      "time": "15:30"}]
+    "investments": [
+      {
+        "id": "INV10",
+        "inversionistId": "I10",
+        "assetId": "A10",
+        "amount": 2.0,
+        "purchasePrice": 6400.0,
+        "date": "2024-02-03",
+        "time": "15:30"
+      }
+    ]
   },
   {
     "id": "I013",
     "name": "Juan David Cardenas",
     "email": "juandavid@gmail.com",
-    "availableCapital": 1978115.0,
+    "availableCapital": 1678115.0,
     "riskProfile": "CONSERVATIVE",
     "investments": [
       {
@@ -182,6 +212,15 @@
         "purchasePrice": 360.5,
         "date": "2026-04-06",
         "time": "20:49:39.881376700"
+      },
+      {
+        "id": "INV053",
+        "inversionistId": "I013",
+        "assetId": "A4",
+        "amount": 2.0,
+        "purchasePrice": 300000.0,
+        "date": "2026-04-06",
+        "time": "21:17:57.709175600"
       }
     ]
   }

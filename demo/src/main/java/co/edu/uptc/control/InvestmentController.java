@@ -186,33 +186,43 @@ public class InvestmentController {
      */
     private void printInvestmentDetails(Investment inv) {
 
-        // 🔹 Calcular métricas derivadas de forma dinámica en tiempo real
         double currentValue = investmentService.calculateCurrentValue(inv);
-    
-        // 🔹 Inversión inicial (ya viene calculada correctamente)
         double initialInvestment = inv.getPurchasePrice();
-    
-        // 🔹 Ganancia/pérdida
         double earnings = currentValue - initialInvestment;
-    
-        // 🔹 Rendimiento %
         double yield = investmentService.calculateYieldPercentage(inv);
-    
+
+        double unitInitial = inv.getAmount() != 0 ? initialInvestment / inv.getAmount() : 0.0;
+        double unitCurrent = inv.getAmount() != 0 ? currentValue / inv.getAmount() : 0.0;
+
         String earningsStr = (earnings >= 0)
             ? "(+$" + String.format("%.2f", earnings) + ")"
             : "(-$" + String.format("%.2f", Math.abs(earnings)) + ")";
-    
-        String detailLine = String.format(
-            view.getLocalizedText("msg.format.investmentDetail"),
-            inv.getId(),
-            inv.getAssetId(),
-            inv.getAmount(),
-            initialInvestment,
-            currentValue,
-            yield,
-            earningsStr
-        );
-    
-        view.printText(detailLine);
+
+        // Encabezado con ID + nombre del activo (si existe)
+        String assetLabel;
+        Asset asset = assetService.findById(inv.getAssetId());
+        if (asset != null) {
+            assetLabel = String.format("%s (%s)", asset.getName(), asset.getAssetType());
+        } else {
+            assetLabel = inv.getAssetId();
+        }
+
+        String header = String.format("[%s] %s", inv.getId(), assetLabel);
+        view.printText(header);
+
+        // Líneas en columnas con etiquetas i18n
+        String qtyLabel = view.getLocalizedText("msg.label.quantity") + ":";
+        String initInvLabel = view.getLocalizedText("msg.label.initialInvestment") + ":";
+        String currValLabel = view.getLocalizedText("msg.label.currentValue") + ":";
+        String unitCurrLabel = view.getLocalizedText("msg.label.currentUnitValue") + ":";
+        String unitInitLabel = view.getLocalizedText("msg.label.initialUnitValue") + ":";
+        String yieldLabel = view.getLocalizedText("msg.label.yield") + ":";
+
+        view.printText(String.format("  %-24s %,.2f", qtyLabel, inv.getAmount()));
+        view.printText(String.format("  %-24s $%,.2f", initInvLabel, initialInvestment));
+        view.printText(String.format("  %-24s $%,.2f", currValLabel, currentValue));
+        view.printText(String.format("  %-24s $%,.2f", unitCurrLabel, unitCurrent));
+        view.printText(String.format("  %-24s $%,.2f", unitInitLabel, unitInitial));
+        view.printText(String.format("  %-24s %.2f%% %s", yieldLabel, yield, earningsStr));
     }
 }
