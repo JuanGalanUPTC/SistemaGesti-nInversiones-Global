@@ -24,40 +24,52 @@ public class InvestorController {
     /**
      * Maneja el registro de un nuevo inversionista.
      */
- public void handleCreateInvestor() {
-        try {
-            view.showMessageByKey("msg.title.createInvestor");
+public void handleCreateInvestor() {
+    try {
+        view.showMessageByKey("msg.title.createInvestor");
 
-            // Si en cualquiera de estos pasos el usuario digita "X", 
-            // el codigo salta directamente al catch de OperationCancelledException
-            String id = view.readStringInput("msg.input.investorId");
-            String name = view.readStringInput("msg.input.investorName");
-            String email = view.readStringInput("msg.input.investorEmail");
-            double capital = view.readDoubleInput("msg.input.availableCapital");
-            String riskStr = view.readStringInput("msg.input.riskProfile").trim().toUpperCase(); 
-            
-            RiskProfile riskProfile;
-            switch (riskStr) {
-                case "CONSERVADOR": case "CONSERVATIVE": riskProfile = RiskProfile.CONSERVATIVE; break;
-                case "MODERADO": case "MODERATE": riskProfile = RiskProfile.MODERATE; break;
-                case "AGRESIVO": case "AGGRESSIVE": riskProfile = RiskProfile.AGGRESSIVE; break;
-                default: throw new IllegalArgumentException("Perfil invalido");
-            }
-
-            investorService.createInvestor(id, name, email, capital, riskProfile, new ArrayList<>());
-            view.showMessageByKey("msg.success.investorCreated");
-
-        } catch (OperationCancelledException e) {
-            // Aqui atrapamos la X y mostramos el mensaje de cancelacion
-            view.printText(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            view.showMessageByKey("msg.error.invalidRisk");
-        } catch (RuntimeException e) {
-            view.showMessageByKey("msg.error.system");
-            view.printText(e.getMessage());
+        String id = view.readStringInput("msg.input.investorId");
+        String name = view.readStringInput("msg.input.investorName");
+        String email = view.readStringInput("msg.input.investorEmail");
+        
+        // --- VALIDACIÓN DE CAPITAL ---
+        double capital = view.readDoubleInput("msg.input.availableCapital");
+        if (capital < 0) {
+            view.showMessageByKey("msg.error.negativeCapital");
+            return; // Cortamos la ejecución aquí
         }
-    }
+        // -----------------------------
 
+        String riskStr = view.readStringInput("msg.input.riskProfile").trim().toUpperCase(); 
+        
+        RiskProfile riskProfile;
+        switch (riskStr) {
+            case "CONSERVADOR": case "CONSERVATIVE": riskProfile = RiskProfile.CONSERVATIVE; break;
+            case "MODERADO": case "MODERATE": riskProfile = RiskProfile.MODERATE; break;
+            case "AGRESIVO": case "AGGRESSIVE": riskProfile = RiskProfile.AGGRESSIVE; break;
+            default: throw new IllegalArgumentException("INVALID_RISK");
+        }
+
+        investorService.createInvestor(id, name, email, capital, riskProfile, new ArrayList<>());
+        view.showMessageByKey("msg.success.investorCreated");
+
+  } catch (IllegalArgumentException e) {
+    // Manejo de errores de validación específicos
+    switch (e.getMessage()) {
+        case "ID_ALREADY_EXISTS":
+            view.showMessageByKey("msg.error.idAlreadyExists");
+            break;
+        case "NEGATIVE_CAPITAL":
+            view.showMessageByKey("msg.error.negativeCapital");
+            break;
+        case "INVALID_RISK":
+            view.showMessageByKey("msg.error.invalidRisk");
+            break;
+        default:
+            view.printText(e.getMessage());
+    }
+}
+}
     /**
      * Maneja el proceso de inicio de sesión de un inversionista.
      * @return El ID del inversionista si el login es exitoso, o null si falla/cancela.

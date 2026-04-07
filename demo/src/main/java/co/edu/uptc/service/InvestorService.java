@@ -28,7 +28,6 @@ public class InvestorService {
     public InvestorService(JsonRepository<Investor> repo) {
         this.repo = repo;
     }
-
     /**
      * Registra un nuevo inversionista con los datos obligatorios (identificador, nombre,
      * correo, capital disponible y perfil de riesgo). La lista de inversiones se inicializa vacía.
@@ -40,12 +39,37 @@ public class InvestorService {
      * @param riskProfile perfil de riesgo (conservador, moderado o agresivo)
      * @param inversions no utilizado; se persiste siempre una lista vacía al crear
      */
-    public void createInvestor(String id, String name, String email, double availableCapital, RiskProfile riskProfile,
-            List<Investment> inversions) {
+  public void createInvestor(String id, String name, String email, double availableCapital, RiskProfile riskProfile,
+                               List<Investment> inversions) {
         try {
-            repo.save(new Investor(id, name, email, availableCapital, riskProfile, new ArrayList<>()));
+            // 1. Validar que el capital no sea negativo
+            if (availableCapital < 0) {
+                throw new IllegalArgumentException("NEGATIVE_CAPITAL");
+            }
+
+            // 2. Obtener la lista actual de inversionistas del repositorio
+            List<Investor> currentInvestors = repo.findAll();
+
+            // 3. Comprobar si ya existe un inversionista con el mismo ID (ignorando mayúsculas)
+            boolean exists = currentInvestors.stream()
+                    .anyMatch(inv -> inv.getId().equalsIgnoreCase(id));
+
+            if (exists) {
+                // Lanzamos una excepción con un mensaje específico para identificar el error de duplicado
+                throw new IllegalArgumentException("ID_ALREADY_EXISTS");
+            }
+
+            // 4. Si pasa las validaciones, creamos el objeto y lo guardamos
+            // Se inicializa con una lista de inversiones vacía para evitar valores nulos en el JSON
+            Investor newInvestor = new Investor(id, name, email, availableCapital, riskProfile, new ArrayList<>());
+            repo.save(newInvestor);
+
+        } catch (IllegalArgumentException e) {
+            // Re-lanzamos la excepción (NEGATIVE_CAPITAL o ID_ALREADY_EXISTS)
+            throw e;
         } catch (RuntimeException e) {
-            throw new RuntimeException("Error al registrar el inversionista.", e);
+            // Capturamos errores inesperados (como problemas de escritura en disco)
+            throw new RuntimeException("Error al registrar el inversionista en el sistema.", e);
         }
     }
 
@@ -56,7 +80,8 @@ public class InvestorService {
      */
     public List<Investor> listInversionists() {
         try {
-            return repo.findAll();
+            List<Investor> investors = repo.findAll();
+            return investors != null ? investors : new ArrayList<>();
         } catch (RuntimeException e) {
             throw new RuntimeException("Error trying to list the investors.", e);
         }
